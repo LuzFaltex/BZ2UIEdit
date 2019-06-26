@@ -25,9 +25,9 @@ namespace BZ2UIEdit
     {
         public MainWindow()
         {
+            DataContext = new AppCommands();
             InitializeComponent();
             MainFrame.Navigate(new MainPage());
-            DataContext = new AppCommands();
         }
     }
 }

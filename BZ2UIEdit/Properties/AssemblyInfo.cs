@@ -8,11 +8,11 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("BZ2UIEdit")]
-[assembly: AssemblyDescription("An open-source UI editor for Battlezone 2: Combat Commander")]
+[assembly: AssemblyDescription("Battlezone II UI Editor is an open source tool made by LuzFaltex. It allows users to edit Battlezone's menu system using an IDE-like environment that ensures consistency and functionality.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("LuzFaltex")]
-[assembly: AssemblyProduct("BZ2UIEdit")]
-[assembly: AssemblyCopyright("Copyright © LuzFaltex  2019")]
+[assembly: AssemblyProduct("Battlezone II UI Editor")]
+[assembly: AssemblyCopyright("© LuzFaltex  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

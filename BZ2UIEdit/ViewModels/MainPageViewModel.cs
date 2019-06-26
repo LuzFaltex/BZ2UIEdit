@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace BZ2UIEdit.ViewModels
 {
-    public class MainPageViewModel : DependencyObject
+    public class MainPageViewModel : ViewModelBase
     {
         public static readonly DependencyProperty AppCommandsDependencyProperty
             = DependencyProperty.Register("AppCommands", typeof(AppCommands), typeof(MainPageViewModel));

@@ -11,16 +11,18 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BZ2UIEdit.ViewModels;
 
 namespace BZ2UIEdit.Windows
 {
     /// <summary>
     /// Interaction logic for AboutDialog.xaml
     /// </summary>
-    public partial class AboutDialog : Window
+    public partial class AboutDialog
     {
         public AboutDialog()
         {
+            DataContext = new AboutDialogViewModel();
             InitializeComponent();
         }
     }
