@@ -8,6 +8,11 @@
         mc:Ignorable="d"
         Title="BZ2UIEdit" Height="450" Width="800"
         TitleCaps="False">
+    <Window.InputBindings>
+        <KeyBinding Key="N" Modifiers="Control+Shift" Command="{Binding NewProjectCommand}" />
+        <KeyBinding Key="F1" Command="{Binding ShowAboutCommand}" />
+        <KeyBinding Key="F1" Modifiers="Control" Command="{Binding ShowHelpCommand}" />
+    </Window.InputBindings>
     <Grid>
         <Frame NavigationUIVisibility="Hidden" Name="MainFrame" />
     </Grid>

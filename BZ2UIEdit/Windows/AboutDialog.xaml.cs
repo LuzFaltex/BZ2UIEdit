@@ -1,7 +1,4 @@
-﻿using BZ2UIEdit.Commands;
-using BZ2UIEdit.ViewModels;
-using BZ2UIEdit.Views;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,21 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BZ2UIEdit
+namespace BZ2UIEdit.Windows
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for AboutDialog.xaml
     /// </summary>
-    public partial class MainWindow
+    public partial class AboutDialog : Window
     {
-        public MainWindow()
+        public AboutDialog()
         {
             InitializeComponent();
-            MainFrame.Navigate(new MainPage());
-            DataContext = new AppCommands();
         }
     }
 }

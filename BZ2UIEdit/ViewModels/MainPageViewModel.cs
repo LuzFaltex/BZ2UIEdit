@@ -11,8 +11,17 @@ using System.Windows.Input;
 
 namespace BZ2UIEdit.ViewModels
 {
-    public class MainPageViewModel : ViewModelBase
+    public class MainPageViewModel : DependencyObject
     {
+        public static readonly DependencyProperty AppCommandsDependencyProperty
+            = DependencyProperty.Register("AppCommands", typeof(AppCommands), typeof(MainPageViewModel));
+
+        public AppCommands AppCommands
+        {
+            get { return (AppCommands) GetValue(AppCommandsDependencyProperty); }
+            set { SetValue(AppCommandsDependencyProperty, value); }
+        }
+
         public ICommand CollapseSidebarCommand { get; } 
             = new RelayCommand(parameter =>
             {
@@ -21,16 +30,5 @@ namespace BZ2UIEdit.ViewModels
                     tab.IsSelected = true;
                 }                
             });
-
-        public ICommand NewProjectCommand { get; }
-            = new RelayCommand(_ =>
-            {
-                new NewProjectDialog().ShowDialog();
-            });
-
-        public ICommand CloseCommand { get; }
-            = new RelayCommand(
-                _ => Application.Current.MainWindow.Close(),
-                _ => (Application.Current != null && Application.Current.MainWindow != null));
     }
 }

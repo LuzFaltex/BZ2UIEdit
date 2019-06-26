@@ -4,15 +4,10 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BZ2UIEdit.Views"
+      xmlns:fa="http://schemas.fontawesome.io/icons/"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainPage">
-    <Page.CommandBindings>
-        
-    </Page.CommandBindings>
-    <Page.InputBindings>
-        <KeyBinding Key="N" Modifiers="Control+Shift" Command="{Binding NewProjectCommand}" />
-    </Page.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -20,11 +15,11 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Menu>
+        <Menu Name="MainMenu">
             <MenuItem Header="_File">
                 <MenuItem Header="_New">
                     <MenuItem Header="_Project..."
-                              Command="{Binding Path=NewProjectCommand}"
+                              Command="{Binding NewProjectCommand}"
                               InputGestureText="Ctrl+Shift+N"/>
                     <MenuItem Header="_File..."
                               InputGestureText="Ctrl+N" />
@@ -41,6 +36,23 @@
             </MenuItem>
             <MenuItem Header="_Debug">
                 <MenuItem Header="_Generate Preview" InputGestureText="F5" />
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="_View Help" InputGestureText="Ctrl+F1" Command="{Binding ShowHelpCommand}">
+                    <MenuItem.Icon>
+                        <Border Background="White" 
+                                HorizontalAlignment="Center" VerticalAlignment="Center"
+                                Width="20px" Height="20px"
+                                CornerRadius="50">
+                            <fa:FontAwesome
+                                HorizontalAlignment="Center" VerticalAlignment="Center"
+                                FontSize="19"
+                                Icon="QuestionCircle"
+                                Foreground="{StaticResource AccentColorBrush}"></fa:FontAwesome>
+                        </Border>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="About BZ2UIEdit" InputGestureText="F1" Command="{Binding ShowAboutCommand}" />
             </MenuItem>
         </Menu>
 

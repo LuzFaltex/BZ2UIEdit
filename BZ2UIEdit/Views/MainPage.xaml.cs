@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BZ2UIEdit.Commands;
 
 namespace BZ2UIEdit.Views
 {
@@ -25,6 +26,7 @@ namespace BZ2UIEdit.Views
         {
             InitializeComponent();
             DataContext = new MainPageViewModel();
+            MainMenu.DataContext = (AppCommands)Application.Current.MainWindow.DataContext;
         }
     }
 }
