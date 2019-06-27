@@ -1,7 +1,4 @@
-﻿using BZ2UIEdit.Commands;
-using BZ2UIEdit.ViewModels;
-using BZ2UIEdit.Views;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,18 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BZ2UIEdit
+namespace BZ2UIEdit.UserControls
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for CollapsibleSidebar.xaml
     /// </summary>
-    public partial class MainWindow
+    public partial class CollapsibleSidebar : UserControl
     {
-        public MainWindow()
+        public CollapsibleSidebar()
         {
-            DataContext = new MainWindowViewModel();
             InitializeComponent();
-            MainFrame.Navigate(new MainPage());
         }
     }
 }

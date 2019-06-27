@@ -34,13 +34,10 @@ namespace BZ2UIEdit.ViewModels
             = Assembly.GetExecutingAssembly()
                 .GetCustomAttribute<AssemblyCopyrightAttribute>().Copyright;
 
-        public ICommand OpenHyperlinkCommand
+        public ICommand OpenHyperlinkCommand { get; }
             = new RelayCommand<string>(
-                uri => System.Diagnostics.Process.Start(uri),
-                uri =>
-                {
-                    return Uri.TryCreate(uri, UriKind.Absolute, out Uri uriResult)
-                                  && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
-                });
+                x => System.Diagnostics.Process.Start(x),
+                x => Uri.TryCreate(x, UriKind.Absolute, out Uri uriResult)
+                                  && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps));
     }
 }

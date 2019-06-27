@@ -26,7 +26,7 @@ namespace BZ2UIEdit.Views
         {
             InitializeComponent();
             DataContext = new MainPageViewModel();
-            MainMenu.DataContext = (AppCommands)Application.Current.MainWindow.DataContext;
+            MainMenu.DataContext = (MainWindowViewModel)Application.Current.MainWindow.DataContext;
         }
     }
 }

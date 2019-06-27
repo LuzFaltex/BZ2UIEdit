@@ -30,5 +30,7 @@ namespace BZ2UIEdit.ViewModels
                     tab.IsSelected = true;
                 }                
             });
+
+
     }
 }

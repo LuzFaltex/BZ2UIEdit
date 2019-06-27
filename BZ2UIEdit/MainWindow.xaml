@@ -6,14 +6,27 @@
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:BZ2UIEdit"
         mc:Ignorable="d"
-        Title="BZ2UIEdit" Height="450" Width="800"
-        TitleCaps="False">
+        Title="BZ2UIEdit"
+        TitleCaps="False"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        MinWidth="1000" MinHeight="500">
     <Window.InputBindings>
         <KeyBinding Key="N" Modifiers="Control+Shift" Command="{Binding NewProjectCommand}" />
         <KeyBinding Key="F1" Command="{Binding ShowAboutCommand}" />
         <KeyBinding Key="F1" Modifiers="Control" Command="{Binding ShowHelpCommand}" />
     </Window.InputBindings>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
         <Frame NavigationUIVisibility="Hidden" Name="MainFrame" />
-    </Grid>
+        <Grid Grid.Row="1" Background="{StaticResource AccentBaseColorBrush}" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Label Content="{Binding ApplicationStatus}" />
+        </Grid>
+</Grid>
 </controls:MetroWindow>

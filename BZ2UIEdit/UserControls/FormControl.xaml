@@ -7,20 +7,17 @@
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Style>
-        <Style TargetType="{x:Type UserControl}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type UserControl}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="30px" />
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="{Binding Header}" />
-                            <ContentControl Grid.Column="1" Content="{TemplateBinding Content}" />
-                            <fa:FontAwesome 
+    <UserControl.Template>
+        <ControlTemplate TargetType="{x:Type UserControl}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="30px" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Content="{Binding Header}" />
+                <ContentPresenter Grid.Column="1" />
+                <fa:FontAwesome 
                                 Grid.Column="2" 
                                 Icon="QuestionCircleOutline" 
                                 HorizontalAlignment="Center"
@@ -30,11 +27,7 @@
                                 ToolTipService.ShowDuration="500000"
                                 ToolTipService.BetweenShowDelay="500"
                                 ToolTip="{Binding Hint}" />
-                        </Grid>
-                        
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </UserControl.Style>
+            </Grid>
+        </ControlTemplate>
+    </UserControl.Template>
 </UserControl>

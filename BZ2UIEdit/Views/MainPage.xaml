@@ -12,9 +12,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="250" />
         </Grid.RowDefinitions>
 
+        <!-- Menu Bar -->
         <Menu Name="MainMenu">
             <MenuItem Header="_File">
                 <MenuItem Header="_New">
@@ -56,116 +57,121 @@
             </MenuItem>
         </Menu>
 
+        <!-- Body -->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition />
+                <ColumnDefinition MinWidth="250" Width="*"/>
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition MinWidth="250" Width="*"/>
             </Grid.ColumnDefinitions>
 
             <!-- Toolbar -->
             <Border BorderBrush="{StaticResource IdealForegroundColorBrush}" BorderThickness="0 0 1 0">
                 <TabControl x:Name="LeftSidebar" TabStripPlacement="Left">
-                <TabControl.ItemContainerStyle>
-                    <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
-                        <Setter Property="LayoutTransform">
-                            <Setter.Value>
-                                <RotateTransform Angle="90" />
-                            </Setter.Value>
-                        </Setter>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="TabItem">
-                                    <Border Name="Border" BorderThickness="0 0 0 5" BorderBrush="{StaticResource IdealForegroundDisabledBrush}" Height="30px" Margin="0 0 15 0">
-                                        <TextBlock Name="Tag">
-                                            <ContentPresenter x:Name="ContentSite"
-                                                          VerticalAlignment="Center"
-                                                          HorizontalAlignment="Center"
-                                                          ContentSource="Header"
-                                                          />
-                                        </TextBlock>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsSelected" Value="True">
-                                            <Setter TargetName="Tag" Property="Foreground" Value="{StaticResource AccentBaseColorBrush}" />
-                                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource HighlightBrush}" />
-                                        </Trigger>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="Tag" Property="Foreground" Value="{StaticResource AccentBaseColorBrush}" />
-                                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource HighlightBrush}" />
-                                        </Trigger>
-                                        <Trigger Property="IsSelected" Value="False">
-                                            <Setter TargetName="Tag" Property="Foreground" Value="{StaticResource IdealForegroundColorBrush}" />
-                                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource IdealForegroundDisabledBrush}" />
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </TabControl.ItemContainerStyle>
-                <TabItem Header="Toolbox">
-                    <DockPanel LastChildFill="True">
-                        <DockPanel DockPanel.Dock="Top">
-                            <Label HorizontalAlignment="Left" DockPanel.Dock="Left" Content="{Binding SelectedItem.Header, ElementName=LeftSidebar}" />
-                            <Button HorizontalAlignment="Right" 
-                                DockPanel.Dock="Top"
-                                Command="{Binding Path=CollapseSidebarCommand}"
-                                CommandParameter="{Binding ElementName=CollapseSidebarTabItem}"
-                                Background="Transparent"
-                                Foreground="{StaticResource IdealForegroundColorBrush}">X</Button>
+                    <TabControl.ItemContainerStyle>
+                        <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
+                            <Setter Property="LayoutTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="90" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="TabItem">
+                                        <Border Name="Border" BorderThickness="0 0 0 5" BorderBrush="{StaticResource IdealForegroundDisabledBrush}" Height="30px" Margin="0 0 15 0">
+                                            <TextBlock Name="Tag">
+                                                <ContentPresenter x:Name="ContentSite"
+                                                              VerticalAlignment="Center"
+                                                              HorizontalAlignment="Center"
+                                                              ContentSource="Header"
+                                                              />
+                                            </TextBlock>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsSelected" Value="False">
+                                                <Setter TargetName="Tag" Property="Foreground" Value="{StaticResource IdealForegroundColorBrush}" />
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource IdealForegroundDisabledBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Tag" Property="Foreground" Value="{StaticResource AccentBaseColorBrush}" />
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource HighlightBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="Tag" Property="Foreground" Value="{StaticResource AccentBaseColorBrush}" />
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource HighlightBrush}" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </TabControl.ItemContainerStyle>
+                    <TabItem Header="Toolbox">
+                        <DockPanel LastChildFill="True">
+                            <DockPanel DockPanel.Dock="Top" HorizontalAlignment="Stretch">
+                                <Label HorizontalAlignment="Left" DockPanel.Dock="Left" Content="{Binding SelectedItem.Header, ElementName=LeftSidebar}" />
+                                <Button HorizontalAlignment="Right" 
+                                    DockPanel.Dock="Top"
+                                    Command="{Binding Path=CollapseSidebarCommand}"
+                                    CommandParameter="{Binding ElementName=CollapseSidebarTabItem}"
+                                    Background="Transparent"
+                                    Foreground="{StaticResource IdealForegroundColorBrush}">X</Button>
+                            </DockPanel>
+                            <ScrollViewer HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                <TreeView MinWidth="150px">
+                                    <TreeViewItem Header="Parent 1">
+                                        <TreeViewItem Header="Child 1" />
+                                        <TreeViewItem Header="Child 2" />
+                                        <TreeViewItem Header="Child 3" />
+                                    </TreeViewItem>
+                                    <TreeViewItem Header="Parent 2">
+                                        <TreeViewItem Header="Child 1" />
+                                        <TreeViewItem Header="Child 2" />
+                                        <TreeViewItem Header="Child 3" />
+                                    </TreeViewItem>
+                                    <TreeViewItem Header="Parent 3">
+                                        <TreeViewItem Header="Child 1" />
+                                        <TreeViewItem Header="Child 2" />
+                                        <TreeViewItem Header="Child 3" />
+                                    </TreeViewItem>
+                                </TreeView>
+                            </ScrollViewer>
                         </DockPanel>
-                        <TreeView MinWidth="150px">
-                            <TreeViewItem Header="Parent 1">
-                                <TreeViewItem Header="Child 1" />
-                                <TreeViewItem Header="Child 2" />
-                                <TreeViewItem Header="Child 3" />
-                            </TreeViewItem>
-                            <TreeViewItem Header="Parent 2">
-                                <TreeViewItem Header="Child 1" />
-                                <TreeViewItem Header="Child 2" />
-                                <TreeViewItem Header="Child 3" />
-                            </TreeViewItem>
-                            <TreeViewItem Header="Parent 3">
-                                <TreeViewItem Header="Child 1" />
-                                <TreeViewItem Header="Child 2" />
-                                <TreeViewItem Header="Child 3" />
-                            </TreeViewItem>
-                        </TreeView>
-                    </DockPanel>
                     </TabItem>
-                <TabItem Header="Document Outline">
-                    <DockPanel LastChildFill="True">
-                        <DockPanel DockPanel.Dock="Top">
-                            <Label HorizontalAlignment="Left" DockPanel.Dock="Left" Content="{Binding SelectedItem.Header, ElementName=LeftSidebar}"/>
-                            <Button HorizontalAlignment="Right" 
-                                DockPanel.Dock="Top"
-                                Command="{Binding Path=CollapseSidebarCommand}"
-                                CommandParameter="{Binding ElementName=CollapseSidebarTabItem}"
-                                Background="Transparent"
-                                Foreground="{StaticResource IdealForegroundColorBrush}">X</Button>
-                        </DockPanel>                       
-                        <TreeView MinWidth="150px">
-                            <TreeViewItem Header="Parent 1">
-                                <TreeViewItem Header="Child 1" />
-                                <TreeViewItem Header="Child 2" />
-                                <TreeViewItem Header="Child 3" />
-                            </TreeViewItem>
-                            <TreeViewItem Header="Parent 2">
-                                <TreeViewItem Header="Child 1" />
-                                <TreeViewItem Header="Child 2" />
-                                <TreeViewItem Header="Child 3" />
-                            </TreeViewItem>
-                            <TreeViewItem Header="Parent 3">
-                                <TreeViewItem Header="Child 1" />
-                                <TreeViewItem Header="Child 2" />
-                                <TreeViewItem Header="Child 3" />
-                            </TreeViewItem>
-                        </TreeView>
-                    </DockPanel>
-                </TabItem>
-                <TabItem Name="CollapseSidebarTabItem" Header="Collapse" Visibility="Hidden"></TabItem>
-            </TabControl>
+                    <TabItem Header="Document Outline">
+                        <DockPanel LastChildFill="True">
+                            <DockPanel DockPanel.Dock="Top" HorizontalAlignment="Stretch">
+                                <Label HorizontalAlignment="Left" DockPanel.Dock="Left" Content="{Binding SelectedItem.Header, ElementName=LeftSidebar}"/>
+                                <Button HorizontalAlignment="Right" 
+                                    DockPanel.Dock="Top"
+                                    Command="{Binding Path=CollapseSidebarCommand}"
+                                    CommandParameter="{Binding ElementName=CollapseSidebarTabItem}"
+                                    Background="Transparent"
+                                    Foreground="{StaticResource IdealForegroundColorBrush}">X</Button>
+                            </DockPanel>
+                            <ScrollViewer Width="250px" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                <TreeView MinWidth="150px">
+                                    <TreeViewItem Header="Parent 1">
+                                        <TreeViewItem Header="Child 1" />
+                                        <TreeViewItem Header="Child 2" />
+                                        <TreeViewItem Header="Child 3" />
+                                    </TreeViewItem>
+                                    <TreeViewItem Header="Parent 2">
+                                        <TreeViewItem Header="Child 1" />
+                                        <TreeViewItem Header="Child 2" />
+                                        <TreeViewItem Header="Child 3" />
+                                    </TreeViewItem>
+                                    <TreeViewItem Header="Parent 3">
+                                        <TreeViewItem Header="Child 1" />
+                                        <TreeViewItem Header="Child 2" />
+                                        <TreeViewItem Header="Child 3" />
+                                    </TreeViewItem>
+                                </TreeView>
+                            </ScrollViewer>
+                        </DockPanel>
+                    </TabItem>
+                    <TabItem Name="CollapseSidebarTabItem" Header="Collapse" Visibility="Hidden"></TabItem>
+                </TabControl>
             </Border>
 
             <!-- Active Window Editor -->
@@ -222,24 +228,17 @@
                                     </TreeViewItem>
                                     <TreeViewItem Header="File" />
                                 </TreeViewItem>
-                                
                             </TreeView>
                         </DockPanel>
                     </Border>
                     <Label Grid.Row="1">Property window goes here</Label>
                 </Grid>
-
-                
             </Border>
-            
         </Grid>
-        
 
-        <Grid Grid.Row="2" Background="{StaticResource AccentBaseColorBrush}" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Label>Ready</Label>
-        </Grid>    
+        <!-- Console Log -->
+        <ScrollViewer Name="ConsoleScroller" Grid.Row="2" Margin="0" Background="{StaticResource GrayBrush3}">
+            <TextBlock Name="ConsoleOutput" Foreground="White" FontFamily="Consolas" Padding="10" />
+        </ScrollViewer>
     </Grid>
 </Page>

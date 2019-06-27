@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BZ2UIEdit", "BZ2UIEdit\BZ2UIEdit.csproj", "{2CFE37E9-3D72-480C-9C8C-FDD07BF01A64}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BZ2UIEdit.Services", "BZ2UIEdit.Services\BZ2UIEdit.Services.csproj", "{CE3A01CA-B028-4014-B817-55A0686AB04C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BZ2UIEdit.Services.Tests", "BZ2UIEdit.Services.Tests\BZ2UIEdit.Services.Tests.csproj", "{CE0598C3-2D8A-40A3-AF76-034846247803}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{2CFE37E9-3D72-480C-9C8C-FDD07BF01A64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CFE37E9-3D72-480C-9C8C-FDD07BF01A64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CFE37E9-3D72-480C-9C8C-FDD07BF01A64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE3A01CA-B028-4014-B817-55A0686AB04C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE3A01CA-B028-4014-B817-55A0686AB04C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE3A01CA-B028-4014-B817-55A0686AB04C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE3A01CA-B028-4014-B817-55A0686AB04C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE0598C3-2D8A-40A3-AF76-034846247803}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE0598C3-2D8A-40A3-AF76-034846247803}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE0598C3-2D8A-40A3-AF76-034846247803}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE0598C3-2D8A-40A3-AF76-034846247803}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

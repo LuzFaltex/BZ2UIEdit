@@ -5,16 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:BZ2UIEdit.Windows"
-                      xmlns:fa="http://schemas.fontawesome.io/icons/"
-                      mc:Ignorable="d"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        mc:Ignorable="d"
         Title="About BZ2UIEdit" TitleCharacterCasing="Normal"
         Height="575" Width="765"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" 
+        ShowMaxRestoreButton="False" 
+        ShowMinButton="False" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Vertical" Grid.Row="0" Margin="10">
@@ -27,7 +28,7 @@
             <TextBlock FontSize="14" TextWrapping="Wrap" Text="{Binding Description}" />
         </StackPanel>
 
-        <StackPanel Orientation="Vertical" Grid.Row="1" Background="{StaticResource GrayBrush8}">
+        <StackPanel Orientation="Vertical" Grid.Row="1" Background="{StaticResource GrayBrush9}">
             <StackPanel Orientation="Horizontal" Margin="10">
                 <StackPanel Orientation="Vertical">
                     <TextBlock Text="{Binding Product}" />
@@ -39,10 +40,15 @@
             <TextBlock Margin="10 0">Third-party copyrights</TextBlock>
             <Grid Margin="10" Height="250">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="6*" />
+                    <ColumnDefinition Width="5*" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <ListBox>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="Focusable" Value="False" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>
                     <ListBoxItem FontSize="18">
                         <TextBlock>
                             <fa:FontAwesome Icon="FileCodeOutline" /> Windows Presentation Foundation - Microsoft
@@ -54,24 +60,26 @@
                     <ListBoxItem FontSize="18">
                         <TextBlock><fa:FontAwesome Icon="FontAwesome" /> Font Awesome - Fonticons, Inc.</TextBlock>
                     </ListBoxItem>
+                    <ListBoxItem FontSize="18">
+                        <TextBlock><fa:FontAwesome Icon="Terminal" /> Json.NET - Newtonsoft</TextBlock>
+                    </ListBoxItem>
                 </ListBox>
 
-                <StackPanel Orientation="Vertical" Grid.Column="1" Margin="0 10 10 10">
-                    <Button HorizontalAlignment="Stretch" Command="{Binding OpenHyperlinkCommand}" CommandParameter="https://github.com/LuzFaltex/BZ2UIEdit/graphs/contributors">Contributors</Button>
+                <StackPanel Orientation="Vertical" Grid.Column="1" Margin="10 0 0 10">
+                    <Button HorizontalAlignment="Stretch" 
+                            Command="{Binding OpenHyperlinkCommand}" CommandParameter="https://github.com/LuzFaltex/BZ2UIEdit/graphs/contributors"
+                            Content="Contributors" />
                 </StackPanel>
             </Grid>
-            
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock TextWrapping="Wrap">Warning: This computer program is protected by copyright law and international treaties. Reproduction and distribution of this program is subject to the terms of the <Hyperlink Command="{Binding OpenHyperlinkCommand}" CommandParameter="https://github.com/LuzFaltex/BZ2UIEdit/blob/master/LICENSE" Foreground="{StaticResource AccentBaseColorBrush}">MIT License</Hyperlink>.</TextBlock>
+                <Button HorizontalAlignment="Stretch" Grid.Column="1" IsCancel="True" VerticalAlignment="Center" Margin="10 10 0 10">OK</Button>
+            </Grid>
         </StackPanel>
-
-        <Grid Grid.Row="2" Background="{StaticResource GrayBrush8}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="6*" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-
-            <TextBlock TextWrapping="Wrap" Margin="10">Warning: This computer program is protected by copyright law and international treaties. Reproduction and distribution of this program is subject to the terms of the <Hyperlink NavigateUri="https://github.com/LuzFaltex/BZ2UIEdit/blob/master/LICENSE" Foreground="{StaticResource AccentColorBrush}">MIT License</Hyperlink>.</TextBlock>
-            <Button HorizontalAlignment="Stretch" Grid.Column="1" IsCancel="True" Margin="10" VerticalAlignment="Center">OK</Button>
-        </Grid>
-        
     </Grid>
 </controls:MetroWindow>
