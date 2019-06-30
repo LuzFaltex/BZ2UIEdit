@@ -13,16 +13,14 @@ namespace BZ2UIEdit.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
-        public static readonly DependencyProperty AppCommandsDependencyProperty
-            = DependencyProperty.Register("AppCommands", typeof(AppCommands), typeof(MainPageViewModel));
-
+        private AppCommands _appCommands;
         public AppCommands AppCommands
         {
-            get { return (AppCommands) GetValue(AppCommandsDependencyProperty); }
-            set { SetValue(AppCommandsDependencyProperty, value); }
+            get { return _appCommands; }
+            set { SetProperty(ref _appCommands, value); }
         }
 
-        public ICommand CollapseSidebarCommand { get; } 
+        public ICommand CollapseSidebarCommand { get; }
             = new RelayCommand(parameter =>
             {
                 if (parameter is TabItem tab)

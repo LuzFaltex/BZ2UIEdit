@@ -148,6 +148,11 @@
     </ApplicationDefinition>
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Commands\AppCommands.cs" />
+    <Compile Include="Converters\EnumToBooleanConverter.cs" />
+    <Compile Include="Converters\InverseBooleanConverter.cs" />
+    <Compile Include="Extensions\LoggerConfigurationExtensions.cs" />
+    <Compile Include="Sinks\GuiSink.cs" />
+    <Compile Include="Validation\StringToIntValidationRule.cs" />
     <Compile Include="ViewModels\LogEntry.cs" />
     <Compile Include="UserControls\CollapsibleSidebar.xaml.cs">
       <DependentUpon>CollapsibleSidebar.xaml</DependentUpon>
@@ -164,6 +169,7 @@
     <Compile Include="ViewModels\AboutDialogViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\NewProjectDialogViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -264,6 +270,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BZ2UIEdit.Services\BZ2UIEdit.Services.csproj">
+      <Project>{CE3A01CA-B028-4014-B817-55A0686AB04C}</Project>
+      <Name>BZ2UIEdit.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

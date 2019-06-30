@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Serilog;
+using Serilog.Events;
 
 namespace BZ2UIEdit.ViewModels
 {
@@ -18,11 +19,11 @@ namespace BZ2UIEdit.ViewModels
             set { SetProperty(ref _dateTime, value); }
         }
 
-        private int _index;
-        public int Index
+        private LogEventLevel _severity;
+        public LogEventLevel Severity
         {
-            get { return _index; }
-            set { SetProperty(ref _index, value); }
+            get { return _severity; }
+            set { SetProperty(ref _severity, value); }
         }
 
         private string _message;

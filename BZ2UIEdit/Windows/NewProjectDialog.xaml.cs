@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BZ2UIEdit.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,7 @@ namespace BZ2UIEdit.Windows
     {
         public NewProjectDialog()
         {
+            DataContext = new NewProjectDialogViewModel();
             InitializeComponent();
         }
     }

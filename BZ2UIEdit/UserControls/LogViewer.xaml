@@ -28,6 +28,24 @@
             </Setter>
         </Style>
 
+        <Style TargetType="ItemsControl" x:Key="ChildLogViewerStyle">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <ItemsPresenter />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel IsItemsHost="True" />
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <DataTemplate DataType="{x:Type vm:LogEntry}">
             <Grid IsSharedSizeScope="True">
                 <Grid.ColumnDefinitions>
@@ -39,8 +57,8 @@
                 <TextBlock Text="{Binding DateTime}" Grid.Column="0"
                            FontWeight="Bold" Margin="5 0 5 0" />
 
-                <TextBlock Text="{Binding Index}" Grid.Column="1"
-                           FontWeight="Bold" Margin="0 0 2 0" />
+                <TextBlock Text="{Binding Severity}" Grid.Column="1"
+                           FontWeight="Bold" Margin="0 0 5 0" />
 
                 <TextBlock Text="{Binding Message}" Grid.Column="2"
                            TextWrapping="Wrap" />
@@ -64,7 +82,7 @@
                            FontWeight="Bold" Margin="5 0 5 0" />
 
                 <TextBlock Text="{Binding Index}" Grid.Column="1"
-                           FontWeight="Bold" Margin="0 0 2 0" />
+                           FontWeight="Bold" Margin="0 0 5 0" />
 
                 <TextBlock Text="{Binding Message}" Grid.Column="2"
                            TextWrapping="Wrap" />
@@ -72,7 +90,7 @@
                 <ToggleButton x:Name="Expander" Grid.Row="1" Grid.Column="0"
                               VerticalAlignment="Top" Content="+" HorizontalAlignment="Right" />
 
-                <ItemsControl ItemsSource="{Binding Contents}" Style="{StaticResource LogViewerStyle}"
+                <ItemsControl ItemsSource="{Binding Contents}" Style="{StaticResource ChildLogViewerStyle}"
                               Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" 
                               x:Name="Contents" Visibility="Collapsed" />
                 
@@ -86,22 +104,14 @@
         </DataTemplate>
     </UserControl.Resources>
     <DockPanel>
-        <TextBlock Text="{Binding Count, StringFormat='{}{0} Items'}"
-                   DockPanel.Dock="Top" />
+        <Grid DockPanel.Dock="Top" Background="{StaticResource GrayBrush2}">
+            <Label>Output</Label>
+            <Label HorizontalAlignment="Right">
+                <TextBlock Text="{Binding Count, StringFormat='{}{0} Items'}" />
+            </Label>
+        </Grid>
 
-        <ItemsControl ItemsSource="{Binding}" Style="{StaticResource LogViewerStyle}">
-            <ItemsControl.Template>
-                <ControlTemplate>
-                    <ScrollViewer CanContentScroll="True">
-                        <ItemsPresenter />
-                    </ScrollViewer>
-                </ControlTemplate>
-            </ItemsControl.Template>
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel IsItemsHost="True" />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
+        <ItemsControl ItemsSource="{Binding}" Style="{StaticResource LogViewerStyle}" />
+
     </DockPanel>
 </UserControl>

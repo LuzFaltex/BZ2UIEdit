@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BZ2UIEdit.Commands;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -31,18 +33,17 @@ namespace BZ2UIEdit.UserControls
         }
 
         public static readonly DependencyProperty ToolTipDependencyProperty
-            = DependencyProperty.Register("Hint", typeof(ToolTip), typeof(FormControl));
+            = DependencyProperty.Register("Hint", typeof(string), typeof(FormControl));
 
-        public ToolTip Hint
+        public string Hint
         {
-            get { return (ToolTip)GetValue(ToolTipDependencyProperty); }
+            get { return (string)GetValue(ToolTipDependencyProperty); }
             set { SetValue(ToolTipDependencyProperty, value); }
         }
 
         public FormControl()
         {
             InitializeComponent();
-            DataContext = this;
         }
     }
 }

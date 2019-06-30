@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +15,6 @@ namespace BZ2UIEdit
     /// </summary>
     public partial class App : Application
     {
+
     }
 }

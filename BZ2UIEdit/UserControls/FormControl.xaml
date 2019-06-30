@@ -4,30 +4,47 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BZ2UIEdit.UserControls"
+             xmlns:converters="clr-namespace:BZ2UIEdit.Converters"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             x:Name="FormControlUC">
     <UserControl.Template>
         <ControlTemplate TargetType="{x:Type UserControl}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="30px" />
-                </Grid.ColumnDefinitions>
-                <Label Grid.Column="0" Content="{Binding Header}" />
-                <ContentPresenter Grid.Column="1" />
-                <fa:FontAwesome 
-                                Grid.Column="2" 
-                                Icon="QuestionCircleOutline" 
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                FontSize="18"
-                                ToolTipService.InitialShowDelay="0" 
-                                ToolTipService.ShowDuration="500000"
-                                ToolTipService.BetweenShowDelay="500"
-                                ToolTip="{Binding Hint}" />
-            </Grid>
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 2" DataContext="{Binding ElementName=FormControlUC}">
+                    <TextBlock Text="{Binding Header}" />
+
+                    <fa:FontAwesome
+                        Name="InfoIcon"
+                        Icon="QuestionCircle" 
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Margin="10 0 0 0"
+                        FontSize="18"
+                        Foreground="{StaticResource AccentColorBrush}"
+                        ToolTipService.InitialShowDelay="0" 
+                        ToolTipService.ShowDuration="500000"
+                        ToolTipService.BetweenShowDelay="500">
+                        <fa:FontAwesome.ToolTip>
+                            <ToolTip Content="{Binding Hint}" />
+                        </fa:FontAwesome.ToolTip>
+                        <fa:FontAwesome.Style>
+                            <Style TargetType="{x:Type fa:FontAwesome}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Hint}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </fa:FontAwesome.Style>
+                    </fa:FontAwesome>
+                    
+                </StackPanel>
+                
+                <ContentPresenter Grid.Row="1" Grid.Column="0" />
+                
+            </StackPanel>
         </ControlTemplate>
     </UserControl.Template>
 </UserControl>

@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BZ2UIEdit.Views"
       xmlns:fa="http://schemas.fontawesome.io/icons/"
+      xmlns:uc="clr-namespace:BZ2UIEdit.UserControls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainPage">
@@ -12,7 +13,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="250" />
         </Grid.RowDefinitions>
 
         <!-- Menu Bar -->
@@ -175,42 +175,52 @@
             </Border>
 
             <!-- Active Window Editor -->
-            <TabControl Grid.Column="1" Margin="10 0 0 0">
-                <TabControl.ItemContainerStyle>
-                    <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="TabItem">
-                                    <DockPanel Name="TabPanel">
-                                        <ContentPresenter x:Name="ContentSite"
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="250" />
+                </Grid.RowDefinitions>
+
+                <TabControl Margin="10 0 0 0">
+                    <TabControl.ItemContainerStyle>
+                        <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="TabItem">
+                                        <DockPanel Name="TabPanel">
+                                            <ContentPresenter x:Name="ContentSite"
                                                           VerticalAlignment="Center"
                                                           HorizontalAlignment="Center"
                                                           ContentSource="Header"
                                                           DockPanel.Dock="Left"
                                                           Margin="5"/>
-                                    </DockPanel>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsSelected" Value="True">
-                                            <Setter TargetName="TabPanel" Property="Background" Value="{StaticResource HighlightBrush}" />
-                                        </Trigger>
-                                        <Trigger Property="IsSelected" Value="False">
-                                            <Setter TargetName="TabPanel" Property="Background" Value="Transparent" />
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </TabControl.ItemContainerStyle>
-                <TabItem Header="SomeConfig.cfg">
-                    <TextBlock TextWrapping="Wrap">
+                                        </DockPanel>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="TabPanel" Property="Background" Value="{StaticResource HighlightBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsSelected" Value="False">
+                                                <Setter TargetName="TabPanel" Property="Background" Value="Transparent" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </TabControl.ItemContainerStyle>
+                    <TabItem Header="SomeConfig.cfg">
+                        <TextBlock TextWrapping="Wrap">
                         A scrollable preview window will go here representing the in-dev preview. The document outline on the left will allow users to quickly find objects in the heirarchy. Double clicking the element in this preview pane or right clicking on the element in the outline and selecting "Properties" will open a new window where the item may be configured.<LineBreak /><LineBreak />The Solution Explorer at the right will work identically to how it does in Visual Studio. The project can be found here, and underneath, all of the folders and files tracked by the project. New items can be created by right clicking on the project and creating either a new folder, empty cfg file, or a templated cfg through a wizard. The templated cfg will be used for modifying existing files, pre-building a file with the correct name and vanilla content.<LineBreak /><LineBreak />The property window below the solution explorer might go away, but for now I plan on using it for some of the simpler items such as button text.<LineBreak /><LineBreak /> The status bar at the bottom will eventually be wired up to show what the app is currently doing. There may be more indicators added in the future, but for now just text will be available.
-                    </TextBlock>
-                </TabItem>
-                <TabItem Header="AnotherConfig.cfg">
-                    Lorum Ipsum 2
-                </TabItem>
-            </TabControl>
+                        </TextBlock>
+                    </TabItem>
+                    <TabItem Header="AnotherConfig.cfg">
+                        Lorum Ipsum 2
+                    </TabItem>
+                </TabControl>
+
+                <uc:LogViewer x:Name="LogControl" Grid.Row="1" Foreground="{StaticResource IdealForegroundColorBrush}" />
+            </Grid>
+            
 
             <Border Grid.Column="2" BorderBrush="{StaticResource IdealForegroundColorBrush}" BorderThickness="1 0 0 0">
                 <Grid>
@@ -235,10 +245,5 @@
                 </Grid>
             </Border>
         </Grid>
-
-        <!-- Console Log -->
-        <ScrollViewer Name="ConsoleScroller" Grid.Row="2" Margin="0" Background="{StaticResource GrayBrush3}">
-            <TextBlock Name="ConsoleOutput" Foreground="White" FontFamily="Consolas" Padding="10" />
-        </ScrollViewer>
     </Grid>
 </Page>

@@ -1,6 +1,9 @@
 ﻿using BZ2UIEdit.Commands;
+using BZ2UIEdit.Extensions;
+using BZ2UIEdit.UserControls;
 using BZ2UIEdit.ViewModels;
 using BZ2UIEdit.Views;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,11 +26,23 @@ namespace BZ2UIEdit
     /// </summary>
     public partial class MainWindow
     {
+        public static readonly string ApplicationBase
+            = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "LuzFaltex", "BZ2UIEdit");
+
         public MainWindow()
         {
+            
             DataContext = new MainWindowViewModel();
             InitializeComponent();
-            MainFrame.Navigate(new MainPage());
+            MainPage mainPage = new MainPage();
+            MainFrame.Navigate(mainPage);
+
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.RollingFile($@"{ApplicationBase}\Logs\{{Date}}.log", flushToDiskInterval: new TimeSpan(0, 5, 0))
+                .WriteTo.GuiLogger((LogViewer)mainPage.FindName("LogControl"))
+                .CreateLogger();
+
+            Log.Information("Startup complete");
         }
     }
 }
