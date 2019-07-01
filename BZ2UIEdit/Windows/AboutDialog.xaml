@@ -43,32 +43,19 @@
                     <ColumnDefinition Width="5*" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <ListBox>
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListBoxItem}">
-                            <Setter Property="Focusable" Value="False" />
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-                    <ListBoxItem FontSize="18">
-                        <TextBlock>
-                            <fa:FontAwesome Icon="FileCodeOutline" /> Windows Presentation Foundation - Microsoft
-                        </TextBlock>
-                    </ListBoxItem>
-                    <ListBoxItem FontSize="18">
-                        <TextBlock><Image Source="https://raw.githubusercontent.com/MahApps/MahApps.Metro/develop/mahapps.metro.logo2.png" VerticalAlignment="Center" HorizontalAlignment="Center" Height="18px" /> MahApps.Metro (Theme) - MahApps</TextBlock>
-                    </ListBoxItem>
-                    <ListBoxItem FontSize="18">
-                        <TextBlock><fa:FontAwesome Icon="FontAwesome" /> Font Awesome - Fonticons, Inc.</TextBlock>
-                    </ListBoxItem>
-                    <ListBoxItem FontSize="18">
-                        <TextBlock><fa:FontAwesome Icon="Terminal" /> Json.NET - Newtonsoft</TextBlock>
-                    </ListBoxItem>
-                </ListBox>
-
+                <ListBox Name="CopyrightBox" ItemsSource="{Binding ThirdPartyCopyrightListing}"/>
                 <StackPanel Orientation="Vertical" Grid.Column="1" Margin="10 0 0 10">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Margin" Value="0 0 0 10" />
+                        </Style>
+                    </StackPanel.Resources>
                     <Button HorizontalAlignment="Stretch" 
                             Command="{Binding OpenHyperlinkCommand}" CommandParameter="https://github.com/LuzFaltex/BZ2UIEdit/graphs/contributors"
                             Content="Contributors" />
+                    <Button HorizontalAlignment="Stretch"
+                            Command="{Binding OpenHyperlinkCommand}" CommandParameter="{Binding ElementName=CopyrightBox, Path=SelectedItem.LicenseUrl}"
+                            Content="License" />
                 </StackPanel>
             </Grid>
             <Grid Margin="10">

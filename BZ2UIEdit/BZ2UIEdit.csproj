@@ -152,6 +152,9 @@
     <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="Extensions\LoggerConfigurationExtensions.cs" />
     <Compile Include="Sinks\GuiSink.cs" />
+    <Compile Include="UserControls\ThirdPartyCopyrightListing.xaml.cs">
+      <DependentUpon>ThirdPartyCopyrightListing.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Validation\StringToIntValidationRule.cs" />
     <Compile Include="ViewModels\LogEntry.cs" />
     <Compile Include="UserControls\CollapsibleSidebar.xaml.cs">
@@ -208,6 +211,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\LogViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ThirdPartyCopyrightListing.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
