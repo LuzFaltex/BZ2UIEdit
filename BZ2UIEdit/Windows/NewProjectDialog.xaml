@@ -31,7 +31,7 @@
         </Grid.RowDefinitions>
 
         <DockPanel Grid.Row="0" Margin="0 0 0 30">
-            <Label DockPanel.Dock="Left" FontSize="40" Content="New Project"/>
+            <TextBlock DockPanel.Dock="Left" FontSize="40" Text="New Project"/>
         </DockPanel>
 
         <StackPanel Grid.IsSharedSizeScope="True" Grid.Row="1">
@@ -116,7 +116,7 @@
                     <StackPanel Orientation="Horizontal">
                         <RadioButton
                             IsChecked="{Binding Path=ProjectType, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=VanillaTemplate}"
-                            Content="Vanilla Template" />
+                            Content="Stock UI" />
                         <fa:FontAwesome
                             Icon="QuestionCircle" 
                             HorizontalAlignment="Center"

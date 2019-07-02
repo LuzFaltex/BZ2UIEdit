@@ -89,9 +89,6 @@
     <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\WindowsAPICodePack-Shell.1.1.1\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.2.8.0\lib\net46\Serilog.dll</HintPath>
     </Reference>
@@ -279,6 +276,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BZ2UIEdit.Common\BZ2UIEdit.Common.csproj">
+      <Project>{D0BEBAF2-BB55-47C2-BEE1-A64E929680FE}</Project>
+      <Name>BZ2UIEdit.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BZ2UIEdit.Services\BZ2UIEdit.Services.csproj">
       <Project>{CE3A01CA-B028-4014-B817-55A0686AB04C}</Project>
       <Name>BZ2UIEdit.Services</Name>

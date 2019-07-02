@@ -1,4 +1,5 @@
 ﻿using BZ2UIEdit.Commands;
+using BZ2UIEdit.Common;
 using BZ2UIEdit.Services.DataValidationService;
 using Microsoft.Win32;
 using System;
@@ -122,7 +123,7 @@ namespace BZ2UIEdit.ViewModels
                 DefaultExt = ".bzi",
                 Filter = "Battlezone UI Project (.bzi)|*.bzi",
                 AddExtension = true,
-                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                InitialDirectory = string.IsNullOrEmpty(vm.ProjectLocation) ? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) : vm.ProjectLocation,
                 Title = "Project Location",
                 OverwritePrompt = true,
             };
@@ -153,19 +154,5 @@ namespace BZ2UIEdit.ViewModels
         {
             MessageBox.Show($"Project Name: {vm.ProjectName}{Environment.NewLine}Project Location: {vm.ProjectLocation}{Environment.NewLine}Game Type: {vm.GameType}{Environment.NewLine}Project Type: {vm.ProjectType}");
         }
-    }
-
-    public enum GameType
-    {
-        BZ98,
-        BZII,
-        BZCC
-    }
-
-    public enum ProjectType
-    {
-        Empty,
-        EmptyFallback,
-        VanillaTemplate
     }
 }

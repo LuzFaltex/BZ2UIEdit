@@ -108,20 +108,23 @@
                     </TabControl.ItemContainerStyle>
                     <TabControl.ContentTemplate>
                         <DataTemplate>
-                            <DockPanel LastChildFill="True">
-                                <Grid DockPanel.Dock="Top" HorizontalAlignment="Stretch" Background="{StaticResource HighlightBrush}">
-                                    <Label HorizontalAlignment="Left" Content="{Binding SelectedItem.Header, ElementName=LeftSidebar}" />
-                                    <Button HorizontalAlignment="Right"
-                                            Command="{Binding Path=CollapseSidebarCommand}"
-                                            Background="Transparent"
-                                            Padding="10 0"
-                                            Foreground="{StaticResource IdealForegroundColorBrush}"
-                                            FontFamily="Marlett"
-                                            Content="r" />
-                                </Grid>
-                                <ScrollViewer HorizontalAlignment="Stretch" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                                </ScrollViewer>
-                            </DockPanel>
+                            <Border BorderBrush="{StaticResource GrayBrush9}" BorderThickness="1">
+                                <DockPanel LastChildFill="True">
+                                    <Grid DockPanel.Dock="Top" HorizontalAlignment="Stretch" Background="{StaticResource HighlightBrush}">
+                                        <Label HorizontalAlignment="Left" Content="{Binding SelectedItem.Header, ElementName=LeftSidebar}" />
+                                        <Button HorizontalAlignment="Right"
+                                                Command="{Binding Path=CollapseSidebarCommand}"
+                                                Background="Transparent"
+                                                Padding="10 0"
+                                                Foreground="{StaticResource IdealForegroundColorBrush}"
+                                                FontFamily="Marlett"
+                                                Content="r" />
+                                    </Grid>
+                                    <ScrollViewer HorizontalAlignment="Stretch" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                        <ContentControl Content="{Binding}" />
+                                    </ScrollViewer>
+                                </DockPanel>
+                            </Border>
                         </DataTemplate>
                     </TabControl.ContentTemplate>
                     <TabControl.Resources>
@@ -130,7 +133,7 @@
                         </Style>
                     </TabControl.Resources>
                     <TabItem Header="Toolbox">
-                        <TreeView MinWidth="150px" Background="#20000000">
+                        <TreeView MinWidth="150px" Background="#1A000000">
                             <TreeViewItem Header="Parent 1">
                                 <TreeViewItem Header="Child 1" />
                                 <TreeViewItem Header="Child 2" />
@@ -150,7 +153,7 @@
                     </TabItem>
                     <TabItem Header="Document Outline">
                         <ScrollViewer Width="250px" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                            <TreeView MinWidth="150px" Background="#20000000">
+                            <TreeView MinWidth="150px" Background="#1A000000">
                                 <TreeViewItem Header="Parent 1">
                                     <TreeViewItem Header="Child 1" />
                                     <TreeViewItem Header="Child 2" />

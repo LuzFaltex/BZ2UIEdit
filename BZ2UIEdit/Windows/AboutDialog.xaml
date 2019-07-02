@@ -28,7 +28,7 @@
             <TextBlock FontSize="14" TextWrapping="Wrap" Text="{Binding Description}" />
         </StackPanel>
 
-        <StackPanel Orientation="Vertical" Grid.Row="1" Background="{StaticResource GrayBrush9}">
+        <StackPanel Orientation="Vertical" Grid.Row="1" Background="#1A000000">
             <StackPanel Orientation="Horizontal" Margin="10">
                 <StackPanel Orientation="Vertical">
                     <TextBlock Text="{Binding Product}" />
@@ -52,10 +52,15 @@
                     </StackPanel.Resources>
                     <Button HorizontalAlignment="Stretch" 
                             Command="{Binding OpenHyperlinkCommand}" CommandParameter="https://github.com/LuzFaltex/BZ2UIEdit/graphs/contributors"
-                            Content="Contributors" />
+                            Content="Contributors" 
+                            ToolTip="Opens https://github.com/LuzFaltex/BZ2UIEdit/graphs/contributors in your default browser."/>
                     <Button HorizontalAlignment="Stretch"
                             Command="{Binding OpenHyperlinkCommand}" CommandParameter="{Binding ElementName=CopyrightBox, Path=SelectedItem.LicenseUrl}"
-                            Content="License" />
+                            Content="License">
+                        <Button.ToolTip>
+                            <TextBlock Text="{Binding ElementName=CopyrightBox, Path=SelectedItem.LicenseUrl, StringFormat='Opens {0} in your default browser.'}" />
+                        </Button.ToolTip>
+                    </Button>
                 </StackPanel>
             </Grid>
             <Grid Margin="10">
@@ -64,7 +69,7 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock TextWrapping="Wrap">Warning: This computer program is protected by copyright law and international treaties. Reproduction and distribution of this program is subject to the terms of the <Hyperlink Command="{Binding OpenHyperlinkCommand}" CommandParameter="https://github.com/LuzFaltex/BZ2UIEdit/blob/master/LICENSE" Foreground="{StaticResource AccentBaseColorBrush}">MIT License</Hyperlink>.</TextBlock>
+                <TextBlock TextWrapping="Wrap">Warning: This computer program is protected by copyright law and international treaties. Reproduction and distribution of this program is subject to the terms of the <Hyperlink Command="{Binding OpenHyperlinkCommand}" CommandParameter="https://github.com/LuzFaltex/BZ2UIEdit/blob/master/LICENSE" Foreground="{StaticResource AccentBaseColorBrush}" ToolTip="Opens https://github.com/LuzFaltex/BZ2UIEdit/blob/master/LICENSE in your default browser.">MIT License</Hyperlink>.</TextBlock>
                 <Button HorizontalAlignment="Stretch" Grid.Column="1" IsCancel="True" VerticalAlignment="Center" Margin="10 10 0 10">OK</Button>
             </Grid>
         </StackPanel>
