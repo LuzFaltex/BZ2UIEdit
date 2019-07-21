@@ -21,14 +21,9 @@ namespace BZ2UIEdit.ViewModels
         }
 
         public ICommand CollapseSidebarCommand { get; }
-            = new RelayCommand(parameter =>
+            = new RelayCommand<TabItem>(tab =>
             {
-                if (parameter is TabItem tab)
-                {
-                    tab.IsSelected = true;
-                }                
+                tab.IsSelected = true;
             });
-
-
     }
 }

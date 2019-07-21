@@ -1,4 +1,5 @@
 ﻿using BZ2UIEdit.Common;
+using MahApps.Metro.Controls.Dialogs;
 using System.Threading.Tasks;
 
 namespace BZ2UIEdit.Services.NewProjectService
@@ -13,6 +14,6 @@ namespace BZ2UIEdit.Services.NewProjectService
         /// <param name="gameType">The <see cref="GameType"/> determining file compatibility</param>
         /// <param name="projectType">The <see cref="ProjectType"/> determining how to build the project</param>
         /// <returns>A new <see cref="IResult"/> determining success or failure of the operation.</returns>
-        Task<IResult> CreateNewProject(string projectName, string projectLocation, GameType gameType, ProjectType projectType);
+        Task<IResult> CreateNewProject(string projectName, string projectLocation, GameType gameType, bool cloneStock, bool fallback, ProgressDialogController controller);
     }
 }

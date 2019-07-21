@@ -22,11 +22,11 @@ namespace BZ2UIEdit.Views
     /// </summary>
     public partial class MainPage : Page
     {
-        public MainPage()
+        public MainPage(MainWindow mainWindow, MainPageViewModel vm)
         {
             InitializeComponent();
-            DataContext = new MainPageViewModel();
-            MainMenu.DataContext = (MainWindowViewModel)Application.Current.MainWindow.DataContext;
+            DataContext = vm;
+            MainMenu.DataContext = mainWindow;
         }
     }
 }

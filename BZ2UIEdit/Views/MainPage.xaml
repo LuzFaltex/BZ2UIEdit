@@ -13,6 +13,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="5px" />
         </Grid.RowDefinitions>
 
         <!-- Menu Bar -->
@@ -60,149 +61,148 @@
         <!-- Body -->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition MinWidth="250" Width="*"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="5*" />
                 <ColumnDefinition MinWidth="250" Width="*"/>
             </Grid.ColumnDefinitions>
 
             <!-- Toolbar -->
-            <Border BorderBrush="{StaticResource IdealForegroundColorBrush}" BorderThickness="0 0 1 0">
-                <TabControl x:Name="LeftSidebar" TabStripPlacement="Left">
-                    <TabControl.ItemContainerStyle>
-                        <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
-                            <Setter Property="LayoutTransform">
-                                <Setter.Value>
-                                    <RotateTransform Angle="90" />
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="TabItem">
-                                        <Border Name="Border" BorderThickness="0 0 0 5" BorderBrush="{StaticResource IdealForegroundDisabledBrush}" Height="30px" Margin="0 0 15 0">
-                                            <TextBlock Name="Tag">
+            <TabControl Grid.Column="0" x:Name="LeftSidebar" TabStripPlacement="Left">
+                <TabControl.ItemContainerStyle>
+                    <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
+                        <Setter Property="LayoutTransform">
+                            <Setter.Value>
+                                <RotateTransform Angle="90" />
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="TabItem">
+                                    <Border Name="Border" BorderThickness="0 0 0 5" BorderBrush="{DynamicResource GrayBrush2}" Height="30px" Margin="0 0 15 0">
+                                        <TextBlock Name="Tag">
                                                 <ContentPresenter x:Name="ContentSite"
                                                               VerticalAlignment="Center"
                                                               HorizontalAlignment="Center"
                                                               ContentSource="Header"
                                                               />
-                                            </TextBlock>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsSelected" Value="False">
-                                                <Setter TargetName="Tag" Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
-                                                <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource IdealForegroundDisabledBrush}" />
-                                            </Trigger>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="Tag" Property="Foreground" Value="{DynamicResource AccentBaseColorBrush}" />
-                                                <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource HighlightBrush}" />
-                                            </Trigger>
-                                            <Trigger Property="IsSelected" Value="True">
-                                                <Setter TargetName="Tag" Property="Foreground" Value="{DynamicResource AccentBaseColorBrush}" />
-                                                <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource HighlightBrush}" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </TabControl.ItemContainerStyle>
-                    <TabControl.ContentTemplate>
-                        <DataTemplate>
-                            <Border BorderBrush="{StaticResource GrayBrush9}" BorderThickness="1">
-                                <DockPanel LastChildFill="True">
-                                    <Grid DockPanel.Dock="Top" HorizontalAlignment="Stretch" Background="{StaticResource HighlightBrush}">
-                                        <Label HorizontalAlignment="Left" Content="{Binding SelectedItem.Header, ElementName=LeftSidebar}" />
-                                        <Button HorizontalAlignment="Right"
-                                                Command="{Binding Path=CollapseSidebarCommand}"
-                                                Background="Transparent"
-                                                Padding="10 0"
-                                                Foreground="{StaticResource IdealForegroundColorBrush}"
-                                                FontFamily="Marlett"
-                                                Content="r" />
-                                    </Grid>
-                                    <ScrollViewer HorizontalAlignment="Stretch" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                                        <ContentControl Content="{Binding}" />
-                                    </ScrollViewer>
-                                </DockPanel>
-                            </Border>
-                        </DataTemplate>
-                    </TabControl.ContentTemplate>
-                    <TabControl.Resources>
-                        <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
-                            <Setter Property="Background" Value="Transparent" />
-                        </Style>
-                    </TabControl.Resources>
-                    <TabItem Header="Toolbox">
-                        <TreeView MinWidth="150px" Background="#1A000000">
-                            <TreeViewItem Header="Parent 1">
-                                <TreeViewItem Header="Child 1" />
-                                <TreeViewItem Header="Child 2" />
-                                <TreeViewItem Header="Child 3" />
-                            </TreeViewItem>
-                            <TreeViewItem Header="Parent 2">
-                                <TreeViewItem Header="Child 1" />
-                                <TreeViewItem Header="Child 2" />
-                                <TreeViewItem Header="Child 3" />
-                            </TreeViewItem>
-                            <TreeViewItem Header="Parent 3">
-                                <TreeViewItem Header="Child 1" />
-                                <TreeViewItem Header="Child 2" />
-                                <TreeViewItem Header="Child 3" />
-                            </TreeViewItem>
-                        </TreeView>
-                    </TabItem>
-                    <TabItem Header="Document Outline">
-                        <ScrollViewer Width="250px" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                            <TreeView MinWidth="150px" Background="#1A000000">
-                                <TreeViewItem Header="Parent 1">
-                                    <TreeViewItem Header="Child 1" />
-                                    <TreeViewItem Header="Child 2" />
-                                    <TreeViewItem Header="Child 3" />
-                                </TreeViewItem>
-                                <TreeViewItem Header="Parent 2">
-                                    <TreeViewItem Header="Child 1" />
-                                    <TreeViewItem Header="Child 2" />
-                                    <TreeViewItem Header="Child 3" />
-                                </TreeViewItem>
-                                <TreeViewItem Header="Parent 3">
-                                    <TreeViewItem Header="Child 1" />
-                                    <TreeViewItem Header="Child 2" />
-                                    <TreeViewItem Header="Child 3" />
-                                </TreeViewItem>
-                            </TreeView>
-                        </ScrollViewer>
-                    </TabItem>
-                    <TabItem Name="CollapseSidebarTabItem" Header="Collapse" Visibility="Hidden"></TabItem>
-                </TabControl>
-            </Border>
+                                        </TextBlock>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="False">
+                                            <Setter TargetName="Tag" Property="Foreground" Value="{DynamicResource BlackBrush}" />
+                                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource GrayBrush2}" />
+                                        </Trigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Tag" Property="Foreground" Value="{DynamicResource AccentBaseColorBrush}" />
+                                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource HighlightBrush}" />
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="Tag" Property="Foreground" Value="{DynamicResource AccentBaseColorBrush}" />
+                                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource HighlightBrush}" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TabControl.ItemContainerStyle>
+                <TabControl.ContentTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="{StaticResource GrayBrush2}" BorderThickness="1" Margin="-3" Visibility="{Binding Path=SelectedItem.Visibility, ElementName=LeftSidebar}">
+                            <DockPanel LastChildFill="True">
+                                <Grid DockPanel.Dock="Top" HorizontalAlignment="Stretch" Background="{StaticResource WindowTitleColorBrush}">
+                                    <Label HorizontalAlignment="Left" Content="{Binding SelectedItem.Header, ElementName=LeftSidebar}" Foreground="{StaticResource IdealForegroundColorBrush}" />
+                                    <Button DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Page}, Path=DataContext}"
+                                        HorizontalAlignment="Right"
+                                        Command="{Binding Path=CollapseSidebarCommand}"
+                                        CommandParameter="{Binding Source={x:Reference Name=CollapseSidebarTabItem}}"
+                                        FontFamily="Marlett"
+                                        Content="r"
+                                        Style="{DynamicResource LightMetroWindowButtonStyle}">
+                                    </Button>
+                                </Grid>
+                                <ScrollViewer HorizontalAlignment="Stretch" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                    <ContentControl Content="{Binding}" />
+                                </ScrollViewer>
+                            </DockPanel>
+                        </Border>
+                    </DataTemplate>
+                </TabControl.ContentTemplate>
+                <TabControl.Resources>
+                    <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+                        <Setter Property="Background" Value="Transparent" />
+                    </Style>
+                    <Style TargetType="{x:Type TreeView}" BasedOn="{StaticResource {x:Type TreeView}}">
+                        <Setter Property="Background" Value="#1A000000" />
+                        <Setter Property="MinWidth" Value="250" />
+                    </Style>
+                </TabControl.Resources>
+                <TabItem Header="Toolbox">
+                    <TreeView>
+                        <TreeViewItem Header="Parent 1">
+                            <TreeViewItem Header="Child 1" />
+                            <TreeViewItem Header="Child 2" />
+                            <TreeViewItem Header="Child 3" />
+                        </TreeViewItem>
+                        <TreeViewItem Header="Parent 2">
+                            <TreeViewItem Header="Child 1" />
+                            <TreeViewItem Header="Child 2" />
+                            <TreeViewItem Header="Child 3" />
+                        </TreeViewItem>
+                        <TreeViewItem Header="Parent 3">
+                            <TreeViewItem Header="Child 1" />
+                            <TreeViewItem Header="Child 2" />
+                            <TreeViewItem Header="Child 3" />
+                        </TreeViewItem>
+                    </TreeView>
+                </TabItem>
+                <TabItem Header="Document Outline">
+                    <TreeView>
+                        <TreeViewItem Header="Parent 1">
+                            <TreeViewItem Header="Child 1" />
+                            <TreeViewItem Header="Child 2" />
+                            <TreeViewItem Header="Child 3" />
+                        </TreeViewItem>
+                        <TreeViewItem Header="Parent 2">
+                            <TreeViewItem Header="Child 1" />
+                            <TreeViewItem Header="Child 2" />
+                            <TreeViewItem Header="Child 3" />
+                        </TreeViewItem>
+                        <TreeViewItem Header="Parent 3">
+                            <TreeViewItem Header="Child 1" />
+                            <TreeViewItem Header="Child 2" />
+                            <TreeViewItem Header="Child 3" />
+                        </TreeViewItem>
+                    </TreeView>
+                </TabItem>
+                <TabItem x:Name="CollapseSidebarTabItem" Header="Collapse" Visibility="Collapsed" />
+            </TabControl>
 
             <!-- Active Window Editor -->
-            <Grid Grid.Column="1">
+            <Grid Grid.Column="1" Margin="5 0">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition Height="250" />
                 </Grid.RowDefinitions>
 
-                <TabControl Margin="10 0 0 0">
+                <TabControl Margin="0 0 0 0">
                     <TabControl.ItemContainerStyle>
                         <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="TabItem">
-                                        <DockPanel Name="TabPanel">
+                                        <TextBlock Name="TabPanel">
                                             <ContentPresenter x:Name="ContentSite"
                                                           VerticalAlignment="Center"
                                                           HorizontalAlignment="Center"
                                                           ContentSource="Header"
                                                           DockPanel.Dock="Left"
-                                                          Margin="5"/>
-                                        </DockPanel>
+                                                          Margin="5" />
+                                        </TextBlock>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsSelected" Value="True">
                                                 <Setter TargetName="TabPanel" Property="Background" Value="{StaticResource HighlightBrush}" />
-                                            </Trigger>
-                                            <Trigger Property="IsSelected" Value="False">
-                                                <Setter TargetName="TabPanel" Property="Background" Value="Transparent" />
+                                                <Setter TargetName="TabPanel" Property="Foreground" Value="{StaticResource IdealForegroundColorBrush}" />
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
@@ -220,17 +220,17 @@
                     </TabItem>
                 </TabControl>
 
-                <uc:LogViewer x:Name="LogControl" Grid.Row="1" Foreground="{StaticResource IdealForegroundColorBrush}" />
+                <uc:LogViewer x:Name="LogControl" Grid.Row="1" Foreground="{DynamicResource BlackBrush}" BorderBrush="{StaticResource GrayBrush2}" BorderThickness="1" />
             </Grid>
             
 
-            <Border Grid.Column="2" BorderBrush="{StaticResource IdealForegroundColorBrush}" BorderThickness="1 0 0 0">
+            <Border Grid.Column="2" BorderBrush="{StaticResource GrayBrush2}" BorderThickness="1">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <Border BorderBrush="{StaticResource IdealForegroundColorBrush}" BorderThickness="0 0 0 1">
+                    <Border BorderBrush="{StaticResource GrayBrush2}" BorderThickness="0 0 0 1">
                         <DockPanel LastChildFill="True">
                             <Label DockPanel.Dock="Top">Solution Explorer</Label>
                             <TreeView>

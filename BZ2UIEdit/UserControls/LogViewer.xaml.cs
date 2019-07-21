@@ -1,4 +1,5 @@
-﻿using BZ2UIEdit.ViewModels;
+﻿using BZ2UIEdit.Common;
+using BZ2UIEdit.ViewModels;
 using Serilog.Events;
 using System;
 using System.Collections.Generic;
@@ -23,14 +24,25 @@ namespace BZ2UIEdit.UserControls
     /// </summary>
     public partial class LogViewer : UserControl
     {
-
+        private readonly object _lock = new object();
         public ObservableCollection<LogEntry> LogEntries { get; }
             = new ObservableCollection<LogEntry>();
+        
+
 
         public LogViewer()
         {
             DataContext = LogEntries;
+            BindingOperations.EnableCollectionSynchronization(LogEntries, _lock);
             InitializeComponent();            
+        }
+
+        private void AddLogEntry(LogEntry entry)
+        {
+            lock(_lock)
+            {
+                LogEntries.Insert(0, entry);
+            }
         }
 
         public void Log(LogEvent logEvent)
@@ -43,7 +55,7 @@ namespace BZ2UIEdit.UserControls
                     Severity = logEvent.Level,
                     Message = logEvent.RenderMessage()
                 };
-                LogEntries.Insert(0, entry);
+                AddLogEntry(entry);
             }
             else
             {
@@ -68,37 +80,12 @@ namespace BZ2UIEdit.UserControls
                     entry.Contents.Add(GetLogEntry(logEvent.Exception, logEvent.Timestamp.UtcDateTime, logEvent.Level));
                 }
 
-                LogEntries.Insert(0, entry);
+                AddLogEntry(entry);
             }            
         }
 
         public LogEntry GetLogEntry(Exception exception, DateTime timestamp, LogEventLevel severity)
         {
-            /*
-            if (exception.InnerException != null)
-            {
-                CollapsibleLogEntry logEntry = new CollapsibleLogEntry()
-                {
-                    DateTime = timestamp,
-                    Message = exception.ToString(),
-                    Severity = severity,
-                };
-
-                if (exception.InnerException is AggregateException aggregate)
-                {
-                    foreach(Exception ex in aggregate.Flatten().InnerExceptions)
-                    {
-                        logEntry.Contents.Add(GetLogEntry(ex, timestamp, severity));
-                    }
-                }
-                else
-                {
-                    logEntry.Contents.Add(GetLogEntry(exception.InnerException, timestamp, severity));
-                }                
-                return logEntry;                
-            }
-            */
-
             return new LogEntry()
             {
                 Message = exception.ToString(),

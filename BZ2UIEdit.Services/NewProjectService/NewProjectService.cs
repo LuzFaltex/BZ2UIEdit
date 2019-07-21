@@ -4,9 +4,10 @@ using System.IO;
 using System.Threading.Tasks;
 using BZ2UIEdit.Common;
 using BZ2UIEdit.Common.Models;
+using BZ2UIEdit.Services.FileService;
+using MahApps.Metro.Controls.Dialogs;
 using Newtonsoft.Json;
 using Serilog;
-using Serilog.Core;
 
 namespace BZ2UIEdit.Services.NewProjectService
 {
@@ -17,13 +18,16 @@ namespace BZ2UIEdit.Services.NewProjectService
         private static readonly string _bziiLocation = Path.Combine(_appDataBase, "Assets", "BZII");
         private static readonly string _bzccLocation = Path.Combine(_appDataBase, "Assets", "BZCC");
 
-        public NewProjectService(Logger logger)
+        private readonly IFileService _fileService;
+
+        public NewProjectService(ILogger logger, IFileService fileService)
         {
             _logger = logger.ForContext<NewProjectService>();
+            _fileService = fileService;
         }
         
         /// <inheritdoc />
-        public async Task<IResult> CreateNewProject(string projectName, string projectLocation, GameType gameType, ProjectType projectType)
+        public async Task<IResult> CreateNewProject(string projectName, string projectLocation, GameType gameType, bool cloneStock, bool fallback, ProgressDialogController controller)
         {
             List<string> files = new List<string>();
 
@@ -35,7 +39,7 @@ namespace BZ2UIEdit.Services.NewProjectService
                 try
                 {
                     _logger.Debug("Creating project directory");
-                    Directory.CreateDirectory(projectLocation);
+                    _fileService.CreateDirectory(projectLocation);
                 }
                 catch (Exception ex)
                 {
@@ -43,15 +47,15 @@ namespace BZ2UIEdit.Services.NewProjectService
                 }
             }
 
-            var projectModel = new ProjectModel(projectName, gameType, projectType == ProjectType.EmptyFallback, files);
+            var projectModel = new ProjectModel(projectName, gameType, fallback, files);
 
-            var projFileResult = WriteProjectFile(projectLocation, projectModel);
+            var projFileResult = WriteProjectFile(projectLocation, projectModel, controller);
             if (projFileResult is FailureResult)
                 return projFileResult;
 
-            if (projectType == ProjectType.VanillaTemplate)
+            if (cloneStock)
             {
-                var cloneResult = await CloneStockUI(projectLocation, gameType);
+                var cloneResult = await CloneStockUI(projectLocation, gameType, controller);
                 if (cloneResult is FailureResult)
                     return cloneResult;
             }
@@ -59,11 +63,13 @@ namespace BZ2UIEdit.Services.NewProjectService
             return new SuccessResult();
         }
 
-        private IResult WriteProjectFile(string projectLocation, ProjectModel projectModel)
+        private IResult WriteProjectFile(string projectLocation, ProjectModel projectModel, ProgressDialogController controller)
         {
+            controller.SetMessage("Writing project file...");
             try
             {
-                File.WriteAllText(Path.Combine(projectLocation, projectModel.ProjectName, ".bzi"), JsonConvert.SerializeObject(projectModel));
+                _fileService.WriteAllText(Path.Combine(projectLocation, projectModel.ProjectName + ".bzi"), JsonConvert.SerializeObject(projectModel, Formatting.Indented));
+                controller.SetMessage("Writing project file... Done!");
                 return new SuccessResult("Project file written to disk.");
             }
             catch (Exception ex)
@@ -72,7 +78,7 @@ namespace BZ2UIEdit.Services.NewProjectService
             }
         }
 
-        private async Task<IResult> CloneStockUI(string projectLocation, GameType gameType)
+        private async Task<IResult> CloneStockUI(string projectLocation, GameType gameType, ProgressDialogController controller)
         {
             List<FileInfo> stockUIFiles = new List<FileInfo>();
 
@@ -99,13 +105,17 @@ namespace BZ2UIEdit.Services.NewProjectService
             {
                 await Task.Run(() =>
                 {
-                    foreach (var file in stockUIFiles)
+                    // foreach (var file in stockUIFiles)
+                    for (int i = 0; i < stockUIFiles.Count; i++)
                     {
+                        controller.SetProgress((double)i / stockUIFiles.Count);
+
                         // If for whatever reason the file ceases to exist,
                         // skip it.
+                        var file = stockUIFiles[i];
                         if (!file.Exists)
                         {
-                            _logger.Debug("Skipping file {0}: file does not exist.", file.Name);
+                            _logger.Debug("Skipping file '{0}': file does not exist.", file.Name);
                             continue;
                         }
 
@@ -117,13 +127,16 @@ namespace BZ2UIEdit.Services.NewProjectService
                             destDir = new DirectoryInfo(file.DirectoryName.Replace(_bzccLocation, projectLocation));
 
                         // Create the path if it doesn't exist
-                        destDir.Create();
+                        // destDir.Create();
+                        controller.SetMessage($"Creating directory {destDir.FullName}");
+                        _fileService.CreateDirectory(destDir.FullName);
 
                         var newPath = Path.Combine(destDir.FullName, Path.GetFileName(file.FullName));
 
-                        _logger.Debug("Copying file {0} to {1}", file.Name, destDir.FullName);
+                        controller.SetMessage($"Copying file '{file.Name}' to '{destDir.FullName}'");
+                        _logger.Debug("Copying file '{0}' to '{1}'", file.Name, destDir.FullName);
 
-                        file.CopyTo(newPath, true);
+                        _fileService.CopyFile(file, newPath, true);
                     }
                 });               
 

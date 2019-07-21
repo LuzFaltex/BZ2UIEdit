@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MahApps.Metro" Version="1.6.5" />
     <PackageReference Include="Serilog" Version="2.8.0" />
   </ItemGroup>
 

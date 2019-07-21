@@ -22,6 +22,16 @@
     NonActiveWindowTitleBrush="Transparent">
     <controls:MetroWindow.Resources>
         <converters:EnumToBooleanConverter x:Key="enumConverter" />
+        <Style x:Key="TooltipIcon" TargetType="{x:Type fa:FontAwesome}">
+            <Setter Property="Icon" Value="QuestionCircle" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="Foreground" Value="{StaticResource AccentColorBrush}" />
+            <Setter Property="ToolTipService.InitialShowDelay" Value="0" />
+            <Setter Property="ToolTipService.ShowDuration" Value="500000" />
+            <Setter Property="ToolTipService.BetweenShowDelay" Value="500" />
+        </Style>
     </controls:MetroWindow.Resources>
     <Grid Margin="20 0 20 20">
         <Grid.RowDefinitions>
@@ -41,7 +51,7 @@
                 </Style>
             </StackPanel.Resources>
 
-            <uc:FormControl Header="Project Name" Hint="This field is determined by the project location">
+            <uc:FormControl Header="Project Name" Hint="This field is determined by the project file name.">
                 <TextBox IsReadOnly="True" 
                          Text="{Binding ProjectName, UpdateSourceTrigger=PropertyChanged}" />
             </uc:FormControl>
@@ -53,7 +63,7 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <TextBox IsReadOnly="True" Text="{Binding ProjectLocation, UpdateSourceTrigger=PropertyChanged}" />
-                    <Button Grid.Column="1" Command="{Binding OpenFileSaveDialogCommand}" CommandParameter="{Binding}">...</Button>
+                    <Button Grid.Column="1" Command="{Binding OpenFileSaveDialogCommand}" DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:MetroWindow}, Mode=FindAncestor}}">...</Button>
                 </Grid>
             </uc:FormControl>
 
@@ -72,63 +82,26 @@
                 </StackPanel>
             </uc:FormControl>
 
-            <uc:FormControl Header="Project Type">
+            <uc:FormControl Header="Project Options">
                 <StackPanel>
                     <StackPanel.Resources>
-                        <Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource {x:Type RadioButton}}">
+                        <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
                             <Setter Property="Margin" Value="0 0 10 0" />
-                            <Setter Property="GroupName" Value="ProjectTypeSelection" />
                         </Style>
                         <Style TargetType="{x:Type StackPanel}">
                             <Setter Property="Margin" Value="0 0 0 5" />
                         </Style>
                     </StackPanel.Resources>
                     <StackPanel Orientation="Horizontal">
-                        <RadioButton
-                            IsChecked="{Binding Path=ProjectType, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Empty}"
-                            Content="Empty Project" />
-                        <fa:FontAwesome
-                            Icon="QuestionCircle" 
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            FontSize="18"
-                            Foreground="{StaticResource AccentColorBrush}"
-                            ToolTipService.InitialShowDelay="0" 
-                            ToolTipService.ShowDuration="500000"
-                            ToolTipService.BetweenShowDelay="500"
-                            ToolTip="Creates a new project without any files. Useful for creating a new UI from the ground-up." />
+                        <CheckBox IsChecked="{Binding CloneStock}">Copy default UI to project folder</CheckBox>
+                        <fa:FontAwesome Style="{StaticResource TooltipIcon}"
+                            ToolTip="Clones the vanilla config files into your project. Useful for exploring the existing UI." />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <RadioButton 
-                            IsChecked="{Binding Path=ProjectType, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=EmptyFallback}"
-                            Content="Empty with Fallback" />
-                        <fa:FontAwesome
-                            Icon="QuestionCircle" 
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            FontSize="18"
-                            Foreground="{StaticResource AccentColorBrush}"
-                            ToolTipService.InitialShowDelay="0" 
-                            ToolTipService.ShowDuration="500000"
-                            ToolTipService.BetweenShowDelay="500"
-                            ToolTip="Creates a new project without any files. Any missing files will fall back to vanilla, allowing for a lightweight way to modify the vanilla UI." />
+                        <CheckBox IsChecked="{Binding Fallback}">Fallback</CheckBox>
+                        <fa:FontAwesome Style="{StaticResource TooltipIcon}"
+                            ToolTip="Any missing files will fall back to vanilla, allowing for a lightweight way to modify the vanilla UI." />
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <RadioButton
-                            IsChecked="{Binding Path=ProjectType, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=VanillaTemplate}"
-                            Content="Stock UI" />
-                        <fa:FontAwesome
-                            Icon="QuestionCircle" 
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            FontSize="18"
-                            Foreground="{StaticResource AccentColorBrush}"
-                            ToolTipService.InitialShowDelay="0" 
-                            ToolTipService.ShowDuration="500000"
-                            ToolTipService.BetweenShowDelay="500"
-                            ToolTip="Creates a new project pre-populated with the vanilla config files. Useful for exploring the existing UI." />
-                    </StackPanel>
-
                 </StackPanel>
             </uc:FormControl>
         </StackPanel>
@@ -145,13 +118,14 @@
                     IsCancel="True" 
                     Content="Cancel" 
                     />
-            <Button Grid.Column="2"
+            <Button Name="CreateButton"
+                    Grid.Column="2"
                     Padding="10 0"
                     IsDefault="True"
                     Content="Create"
                     Command="{Binding CreateCommand}"
-                    CommandParameter="{Binding}"
-                    IsEnabled="{Binding ContinueButtonEnabled}"/>
+                    IsEnabled="{Binding ContinueButtonEnabled}"
+                    DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:MetroWindow}, Mode=FindAncestor}}"/>
         </Grid>
     </Grid>
 </controls:MetroWindow>

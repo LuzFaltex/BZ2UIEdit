@@ -4,6 +4,7 @@ using Serilog.Events;
 using Serilog.Formatting;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,7 @@ namespace BZ2UIEdit.Sinks
             _logViewer = logViewer;
         }
 
+        [DebuggerStepThrough]
         public void Emit(LogEvent logEvent)
         {
             _logViewer?.Log(logEvent);

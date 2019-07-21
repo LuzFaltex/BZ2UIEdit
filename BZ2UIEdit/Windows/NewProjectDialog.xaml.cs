@@ -1,6 +1,8 @@
-﻿using BZ2UIEdit.ViewModels;
+﻿using BZ2UIEdit.Commands;
+using BZ2UIEdit.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -20,10 +23,48 @@ namespace BZ2UIEdit.Windows
     /// </summary>
     public partial class NewProjectDialog
     {
-        public NewProjectDialog()
-        {
-            DataContext = new NewProjectDialogViewModel();
+        private static NewProjectDialogViewModel viewModel;
+        private static NewProjectDialog instance;
+
+        public ICommand OpenFileSaveDialogCommand { get; }
+            = new RelayCommand(_ => SaveFile(viewModel));
+
+        public ICommand CreateCommand { get; }
+            = new RelayCommand(_ => AcceptHandler());
+
+        public NewProjectDialog(NewProjectDialogViewModel vm)
+        {            
+            DataContext = viewModel = vm;
+            instance = this;
             InitializeComponent();
+        }
+
+        private static void SaveFile(NewProjectDialogViewModel vm)
+        {
+            var sfd = new SaveFileDialog()
+            {
+                FileName = "Project",
+                DefaultExt = ".bzi",
+                Filter = "Battlezone UI Project (.bzi)|*.bzi",
+                AddExtension = true,
+                InitialDirectory = string.IsNullOrEmpty(vm.ProjectLocation) ? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) : vm.ProjectLocation,
+                Title = "Project Location",
+                OverwritePrompt = true,
+            };
+
+            var result = sfd.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK || result == System.Windows.Forms.DialogResult.Yes)
+            {
+                vm.ProjectName = System.IO.Path.GetFileNameWithoutExtension(sfd.FileName);
+                vm.ProjectLocation = System.IO.Path.GetDirectoryName(sfd.FileName);
+            }
+        }
+
+        private static void AcceptHandler()
+        {
+            instance.DialogResult = true;
+            instance.Close();
         }
     }
 }

@@ -43,7 +43,7 @@
                     <ColumnDefinition Width="5*" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <ListBox Name="CopyrightBox" ItemsSource="{Binding ThirdPartyCopyrightListing}"/>
+                <ListBox x:Name="CopyrightBox" ItemsSource="{Binding ThirdPartyCopyrightListing}"/>
                 <StackPanel Orientation="Vertical" Grid.Column="1" Margin="10 0 0 10">
                     <StackPanel.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
@@ -52,14 +52,26 @@
                     </StackPanel.Resources>
                     <Button HorizontalAlignment="Stretch" 
                             Command="{Binding OpenHyperlinkCommand}" CommandParameter="https://github.com/LuzFaltex/BZ2UIEdit/graphs/contributors"
-                            Content="Contributors" 
-                            ToolTip="Opens https://github.com/LuzFaltex/BZ2UIEdit/graphs/contributors in your default browser."/>
+                            ToolTip="Opens https://github.com/LuzFaltex/BZ2UIEdit/graphs/contributors in your default browser."
+                            Padding="5">
+                        <Button.Content>
+                            <TextBlock>Contributors <fa:FontAwesome Icon="ExternalLink" /></TextBlock>
+                        </Button.Content>
+                    </Button>
                     <Button HorizontalAlignment="Stretch"
-                            Command="{Binding OpenHyperlinkCommand}" CommandParameter="{Binding ElementName=CopyrightBox, Path=SelectedItem.LicenseUrl}"
-                            Content="License">
+                            Command="{Binding OpenHyperlinkCommand}" CommandParameter="{Binding ElementName=CopyrightBox, Path=SelectedItem.LicenseUrl}">
                         <Button.ToolTip>
-                            <TextBlock Text="{Binding ElementName=CopyrightBox, Path=SelectedItem.LicenseUrl, StringFormat='Opens {0} in your default browser.'}" />
+                            <ToolTip DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
+                                <TextBlock>
+                                    <Run Text="Opens" />
+                                    <Run Text="{Binding Source={x:Reference CopyrightBox}, Path=SelectedItem.LicenseUrl}" />
+                                    <Run Text="in your default browser." />
+                                </TextBlock>
+                            </ToolTip>
                         </Button.ToolTip>
+                        <Button.Content>
+                            <TextBlock>License <fa:FontAwesome Icon="ExternalLink" /></TextBlock>
+                        </Button.Content>
                     </Button>
                 </StackPanel>
             </Grid>

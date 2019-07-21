@@ -1,7 +1,12 @@
 ﻿using BZ2UIEdit.Commands;
 using BZ2UIEdit.Common;
+using BZ2UIEdit.Services;
 using BZ2UIEdit.Services.DataValidationService;
+using BZ2UIEdit.Services.FileService;
+using BZ2UIEdit.Services.NewProjectService;
 using Microsoft.Win32;
+using Serilog;
+using Serilog.Core;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -42,20 +47,6 @@ namespace BZ2UIEdit.ViewModels
             }
         }
 
-        private int _age;
-
-        [Required(ErrorMessage = "You must specify an age")]
-        [Range(minimum:10, maximum: 100, ErrorMessage = "Age must be between 10 and 100")]
-        public int Age
-        {
-            get { return _age; }
-            set
-            {
-                SetProperty(ref _age, value);
-                ValidateModelProperty(value);
-            }
-        }
-
         private GameType _gameType = GameType.BZCC;
         public GameType GameType
         {
@@ -63,11 +54,18 @@ namespace BZ2UIEdit.ViewModels
             set { SetProperty(ref _gameType, value); }
         }
 
-        private ProjectType _projectType = ProjectType.EmptyFallback;
-        public ProjectType ProjectType
+        private bool _cloneStock = false;
+        public bool CloneStock
         {
-            get { return _projectType; }
-            set { SetProperty(ref _projectType, value); }
+            get { return _cloneStock; }
+            set { SetProperty(ref _cloneStock, value); }
+        }
+
+        private bool _fallback = false;
+        public bool Fallback
+        {
+            get { return _fallback; }
+            set { SetProperty(ref _fallback, value); }
         }
 
         public void ValidateModelProperty(object value, [CallerMemberName] string propertyName = null)
@@ -107,52 +105,5 @@ namespace BZ2UIEdit.ViewModels
         public void RaiseErrorsChanged(string propertyName)
             => ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
         #endregion
-
-
-        public ICommand OpenFileSaveDialogCommand { get; }
-            = new RelayCommand<NewProjectDialogViewModel>(SaveFile);
-
-        public ICommand CreateCommand { get; }
-            = new RelayCommand<NewProjectDialogViewModel>(CreateProject);
-
-        public static void SaveFile(NewProjectDialogViewModel vm)
-        {
-            var sfd = new SaveFileDialog()
-            {
-                FileName = "Project",
-                DefaultExt = ".bzi",
-                Filter = "Battlezone UI Project (.bzi)|*.bzi",
-                AddExtension = true,
-                InitialDirectory = string.IsNullOrEmpty(vm.ProjectLocation) ? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) : vm.ProjectLocation,
-                Title = "Project Location",
-                OverwritePrompt = true,
-            };
-
-            sfd.FileOk += FileOk;
-
-            bool? result = sfd.ShowDialog();
-
-            if (result == true)
-            {
-                vm.ProjectName = System.IO.Path.GetFileNameWithoutExtension(sfd.FileName);
-                vm.ProjectLocation = System.IO.Path.GetDirectoryName(sfd.FileName);
-            }
-
-            void FileOk(object sender, CancelEventArgs e)
-            {
-                var sv = sender as SaveFileDialog;
-                if (System.IO.Path.GetExtension(sv.FileName).ToLower() != ".bzi")
-                {
-                    e.Cancel = true;
-                    MessageBox.Show("Please omit the extension or use 'BZI'");
-                    return;
-                }
-            }
-        }
-
-        public static void CreateProject(NewProjectDialogViewModel vm)
-        {
-            MessageBox.Show($"Project Name: {vm.ProjectName}{Environment.NewLine}Project Location: {vm.ProjectLocation}{Environment.NewLine}Game Type: {vm.GameType}{Environment.NewLine}Project Type: {vm.ProjectType}");
-        }
     }
 }

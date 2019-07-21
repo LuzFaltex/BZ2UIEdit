@@ -22,11 +22,8 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Frame NavigationUIVisibility="Hidden" Name="MainFrame" />
-        <Grid Grid.Row="1" Background="{StaticResource AccentBaseColorBrush}" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Label Content="{Binding ApplicationStatus}" />
-        </Grid>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Background="{StaticResource AccentBaseColorBrush}">
+            <Label Name="StatusLabel" Content="{Binding ApplicationStatus}" Foreground="{StaticResource IdealForegroundColorBrush}"/>
+        </StackPanel>
 </Grid>
 </controls:MetroWindow>
