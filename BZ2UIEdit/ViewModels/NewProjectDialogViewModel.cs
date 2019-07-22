@@ -1,7 +1,6 @@
 ﻿using BZ2UIEdit.Commands;
 using BZ2UIEdit.Common;
 using BZ2UIEdit.Services;
-using BZ2UIEdit.Services.DataValidationService;
 using BZ2UIEdit.Services.FileService;
 using BZ2UIEdit.Services.NewProjectService;
 using Microsoft.Win32;
