@@ -40,7 +40,7 @@
                 <MenuItem Header="_Generate Preview" InputGestureText="F5" />
             </MenuItem>
             <MenuItem Header="_Help">
-                <MenuItem Header="_View Help" InputGestureText="Ctrl+F1" Command="{Binding ShowHelpCommand}">
+                <MenuItem Header="_View Help" InputGestureText="Ctrl+F1" Command="{Binding ShowHelpCommand}" ToolTip="Opens https://github.com/LuzFaltex/BZ2UIEdit/wiki in your default browser.">
                     <MenuItem.Icon>
                         <Border Background="White" 
                                 HorizontalAlignment="Center" VerticalAlignment="Center"
