@@ -1,5 +1,6 @@
 ﻿using BZ2UIEdit.Common;
 using MahApps.Metro.Controls.Dialogs;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace BZ2UIEdit.Services.NewProjectService
@@ -10,10 +11,12 @@ namespace BZ2UIEdit.Services.NewProjectService
         /// Creates a new project in the specified location and pre-populates any appropriate files based on the selected project type.
         /// </summary>
         /// <param name="projectName">The name of the project</param>
-        /// <param name="projectLocation">The location in which the project is held</param>
+        /// <param name="projectFile">A <see cref="FileInfo"/> representing the file information as selected by the user.</param>
         /// <param name="gameType">The <see cref="GameType"/> determining file compatibility</param>
-        /// <param name="projectType">The <see cref="ProjectType"/> determining how to build the project</param>
+        /// <param name="cloneStock">Whether or not to clone the default project files.</param>
+        /// <param name="fallback">Whether or not to fall back to default files.</param>
+        /// <param name="controller">The <see cref="ProgressDialogController"/> showing the current progress.</param>
         /// <returns>A new <see cref="IResult"/> determining success or failure of the operation.</returns>
-        Task<IResult> CreateNewProject(string projectName, string projectLocation, GameType gameType, bool cloneStock, bool fallback, ProgressDialogController controller);
+        Task<IResult> CreateNewProject(string projectName, FileInfo projectFile, GameType gameType, bool cloneStock, bool fallback, ProgressDialogController controller);
     }
 }

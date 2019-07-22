@@ -27,19 +27,19 @@ namespace BZ2UIEdit.Services.NewProjectService
         }
         
         /// <inheritdoc />
-        public async Task<IResult> CreateNewProject(string projectName, string projectLocation, GameType gameType, bool cloneStock, bool fallback, ProgressDialogController controller)
+        public async Task<IResult> CreateNewProject(string projectName, FileInfo projectFile, GameType gameType, bool cloneStock, bool fallback, ProgressDialogController controller)
         {
             List<string> files = new List<string>();
 
-            _logger.Information("Creating new project with name '{0}' and location '{1}'", projectName, projectLocation);
+            _logger.Information("Creating new project {0} in {1}", projectName, projectFile.DirectoryName);
 
             // Create directory if it doesn't exist, though it should...
-            if (!Directory.Exists(projectLocation))
+            if (!Directory.Exists(projectFile.DirectoryName))
             {
                 try
                 {
                     _logger.Debug("Creating project directory");
-                    _fileService.CreateDirectory(projectLocation);
+                    _fileService.CreateDirectory(projectFile.DirectoryName);
                 }
                 catch (Exception ex)
                 {
@@ -49,26 +49,28 @@ namespace BZ2UIEdit.Services.NewProjectService
 
             var projectModel = new ProjectModel(projectName, gameType, fallback, files);
 
-            var projFileResult = WriteProjectFile(projectLocation, projectModel, controller);
+            var projFileResult = WriteProjectFile(projectFile.DirectoryName, projectFile.Name, projectModel, controller);
             if (projFileResult is FailureResult)
                 return projFileResult;
 
             if (cloneStock)
             {
-                var cloneResult = await CloneStockUI(projectLocation, gameType, controller);
+                var cloneResult = await CloneStockUI(projectFile.DirectoryName, gameType, controller);
                 if (cloneResult is FailureResult)
                     return cloneResult;
             }
 
+            _logger.Information("Finished creating project. Opening...");
+
             return new SuccessResult();
         }
 
-        private IResult WriteProjectFile(string projectLocation, ProjectModel projectModel, ProgressDialogController controller)
+        private IResult WriteProjectFile(string projectLocation, string projectFileName, ProjectModel projectModel, ProgressDialogController controller)
         {
             controller.SetMessage("Writing project file...");
             try
             {
-                _fileService.WriteAllText(Path.Combine(projectLocation, projectModel.ProjectName + ".bzi"), JsonConvert.SerializeObject(projectModel, Formatting.Indented));
+                _fileService.WriteAllText(Path.Combine(projectLocation, projectFileName), JsonConvert.SerializeObject(projectModel, Formatting.Indented));
                 controller.SetMessage("Writing project file... Done!");
                 return new SuccessResult("Project file written to disk.");
             }
@@ -115,7 +117,7 @@ namespace BZ2UIEdit.Services.NewProjectService
                         var file = stockUIFiles[i];
                         if (!file.Exists)
                         {
-                            _logger.Debug("Skipping file '{0}': file does not exist.", file.Name);
+                            _logger.Debug("Skipping file {0}: file does not exist.", file.Name);
                             continue;
                         }
 
@@ -134,7 +136,7 @@ namespace BZ2UIEdit.Services.NewProjectService
                         var newPath = Path.Combine(destDir.FullName, Path.GetFileName(file.FullName));
 
                         controller.SetMessage($"Copying file '{file.Name}' to '{destDir.FullName}'");
-                        _logger.Debug("Copying file '{0}' to '{1}'", file.Name, destDir.FullName);
+                        _logger.Debug("Copying file {0} to {1}", file.Name, destDir.FullName);
 
                         _fileService.CopyFile(file, newPath, true);
                     }

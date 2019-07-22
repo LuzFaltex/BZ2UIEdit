@@ -51,10 +51,10 @@
                 </Style>
             </StackPanel.Resources>
 
-            <uc:FormControl Header="Project Name" Hint="This field is determined by the project file name.">
-                <TextBox IsReadOnly="True" 
-                         Text="{Binding ProjectName, UpdateSourceTrigger=PropertyChanged}" />
+            <uc:FormControl Header="Project Name">
+                <TextBox Text="{Binding ProjectName, UpdateSourceTrigger=PropertyChanged}" />
             </uc:FormControl>
+            
 
             <uc:FormControl Header="Project Location">
                 <Grid>
@@ -62,7 +62,7 @@
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBox IsReadOnly="True" Text="{Binding ProjectLocation, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox IsReadOnly="True" Text="{Binding ProjectLocation, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
                     <Button Grid.Column="1" Command="{Binding OpenFileSaveDialogCommand}" DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:MetroWindow}, Mode=FindAncestor}}">...</Button>
                 </Grid>
             </uc:FormControl>

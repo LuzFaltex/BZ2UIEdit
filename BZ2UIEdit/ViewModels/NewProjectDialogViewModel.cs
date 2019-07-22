@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -28,22 +29,31 @@ namespace BZ2UIEdit.ViewModels
         private readonly Dictionary<string, ICollection<string>> _validationErrors
             = new Dictionary<string, ICollection<string>>();
 
-        private string _projectName;
-
+        private string _projectName = "Project";
         public string ProjectName
         {
             get { return _projectName; }
-            set { SetProperty(ref _projectName, value); }
-        }
-
-        private string _projectLocation;
-        public string ProjectLocation
-        {
-            get { return _projectLocation; }
             set
             {
-                SetProperty(ref _projectLocation, value);
+                SetProperty(ref _projectName, value);
                 OnPropertyChanged(nameof(ContinueButtonEnabled));
+            }
+        }
+
+        public string ProjectLocation
+        {
+            get { return _projectFile?.DirectoryName ?? ""; }
+        }
+
+        private FileInfo _projectFile;
+        public FileInfo ProjectFile
+        {
+            get { return _projectFile; }
+            set
+            {
+                SetProperty(ref _projectFile, value);
+                OnPropertyChanged(nameof(ContinueButtonEnabled));
+                OnPropertyChanged(nameof(ProjectLocation));
             }
         }
 
@@ -89,7 +99,7 @@ namespace BZ2UIEdit.ViewModels
             => CanContinue(this);
 
         public static bool CanContinue(NewProjectDialogViewModel vm)
-            => !vm.HasErrors & !string.IsNullOrWhiteSpace(vm.ProjectLocation);
+            => !vm.HasErrors & !string.IsNullOrWhiteSpace(vm.ProjectLocation) & !string.IsNullOrWhiteSpace(vm.ProjectName);
 
         #region INotifyDataErrorInfo members
 

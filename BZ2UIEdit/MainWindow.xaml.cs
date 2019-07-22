@@ -101,7 +101,7 @@ namespace BZ2UIEdit
             IFileService fileService = new FileService();
             INewProjectService newProjectService = new NewProjectService(Log.Logger, fileService);
 
-            await newProjectService.CreateNewProject(vm.ProjectName, vm.ProjectLocation, vm.GameType, vm.CloneStock, vm.Fallback, controller);
+            await newProjectService.CreateNewProject(vm.ProjectName, vm.ProjectFile, vm.GameType, vm.CloneStock, vm.Fallback, controller);
 
             controller.SetProgress(1d);
             controller.SetMessage("Done!");
