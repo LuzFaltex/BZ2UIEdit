@@ -1,0 +1,131 @@
+﻿<controls:MetroWindow
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:BZ2UIEdit.Windows"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:fonts="http://metro.mahapps.com/winfx/xaml/shared"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:controlzex="urn:controlzex"
+    xmlns:uc="clr-namespace:BZ2UIEdit.UserControls"
+    xmlns:validation="clr-namespace:BZ2UIEdit.Validation"
+    xmlns:converters="clr-namespace:BZ2UIEdit.Converters"
+    x:Class="BZ2UIEdit.Windows.NewProjectDialog"
+    mc:Ignorable="d"
+    x:Name="NewProjectDialogWindow"
+    Title="" Height="650" Width="500"
+    WindowStartupLocation="CenterScreen" 
+    ShowMaxRestoreButton="False" 
+    ShowMinButton="False" ResizeMode="NoResize"
+    WindowTitleBrush="Transparent"
+    NonActiveWindowTitleBrush="Transparent">
+    <controls:MetroWindow.Resources>
+        <converters:EnumToBooleanConverter x:Key="enumConverter" />
+        <Style x:Key="TooltipIcon" TargetType="{x:Type fa:FontAwesome}">
+            <Setter Property="Icon" Value="QuestionCircle" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="Foreground" Value="{StaticResource AccentColorBrush}" />
+            <Setter Property="ToolTipService.InitialShowDelay" Value="0" />
+            <Setter Property="ToolTipService.ShowDuration" Value="500000" />
+            <Setter Property="ToolTipService.BetweenShowDelay" Value="500" />
+        </Style>
+    </controls:MetroWindow.Resources>
+    <Grid Margin="20 0 20 20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" Margin="0 0 0 30">
+            <TextBlock DockPanel.Dock="Left" FontSize="40" Text="New Project"/>
+        </DockPanel>
+
+        <StackPanel Grid.IsSharedSizeScope="True" Grid.Row="1">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type uc:FormControl}">
+                    <Setter Property="Margin" Value="0 0 0 15" />
+                </Style>
+            </StackPanel.Resources>
+
+            <uc:FormControl Header="Project Name">
+                <TextBox Text="{Binding ProjectName, UpdateSourceTrigger=PropertyChanged}" />
+            </uc:FormControl>
+            
+
+            <uc:FormControl Header="Project Location">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox IsReadOnly="True" Text="{Binding ProjectLocation, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                    <Button Grid.Column="1" Command="{Binding OpenFileSaveDialogCommand}" DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:MetroWindow}, Mode=FindAncestor}}">...</Button>
+                </Grid>
+            </uc:FormControl>
+
+            <uc:FormControl Header="Game">
+                <StackPanel>
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource {x:Type RadioButton}}">
+                            <Setter Property="Margin" Value="0 0 5 5" />
+                            <Setter Property="GroupName" Value="GameSelection" />
+                        </Style>
+                    </StackPanel.Resources>
+                    <RadioButton IsChecked="{Binding GameType, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=BZII}"
+                                 Content="Battlezone 2: Combat Commander (CD)" />
+                    <RadioButton IsChecked="{Binding GameType, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=BZCC}"
+                                 Content="Battlezone: Combat Commander (Steam/GOG)" />
+                </StackPanel>
+            </uc:FormControl>
+
+            <uc:FormControl Header="Project Options">
+                <StackPanel>
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
+                            <Setter Property="Margin" Value="0 0 10 0" />
+                        </Style>
+                        <Style TargetType="{x:Type StackPanel}">
+                            <Setter Property="Margin" Value="0 0 0 5" />
+                        </Style>
+                    </StackPanel.Resources>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding CloneStock}">Copy default UI to project folder</CheckBox>
+                        <fa:FontAwesome Style="{StaticResource TooltipIcon}"
+                            ToolTip="Clones the vanilla config files into your project. Useful for exploring the existing UI." />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding Fallback}">Fallback</CheckBox>
+                        <fa:FontAwesome Style="{StaticResource TooltipIcon}"
+                            ToolTip="Any missing files will fall back to vanilla, allowing for a lightweight way to modify the vanilla UI." />
+                    </StackPanel>
+                </StackPanel>
+            </uc:FormControl>
+        </StackPanel>
+
+        <Grid Height="40px" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" 
+                    Margin="0 0 10 0"
+                    Padding="10 0"
+                    IsCancel="True" 
+                    Content="Cancel" 
+                    />
+            <Button Name="CreateButton"
+                    Grid.Column="2"
+                    Padding="10 0"
+                    IsDefault="True"
+                    Content="Create"
+                    Command="{Binding CreateCommand}"
+                    IsEnabled="{Binding ContinueButtonEnabled}"
+                    DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:MetroWindow}, Mode=FindAncestor}}"/>
+        </Grid>
+    </Grid>
+</controls:MetroWindow>
