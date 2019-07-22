@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BZ2UIEdit.Common.Models
 {
@@ -37,6 +35,11 @@ namespace BZ2UIEdit.Common.Models
             GameType = gameType;
             FallbackToDefaults = fallbackToDefaults;
             Files = new List<string>(files);
+        }
+
+        public ProjectModel(string projectName, GameType gameType, bool fallbackToDefaults) : this(projectName, gameType, fallbackToDefaults, new string[0])
+        {
+
         }
     }
 }

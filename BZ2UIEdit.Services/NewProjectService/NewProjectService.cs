@@ -25,7 +25,7 @@ namespace BZ2UIEdit.Services.NewProjectService
             _logger = logger.ForContext<NewProjectService>();
             _fileService = fileService;
         }
-        
+
         /// <inheritdoc />
         public async Task<IResult> CreateNewProject(string projectName, FileInfo projectFile, GameType gameType, bool cloneStock, bool fallback, ProgressDialogController controller)
         {

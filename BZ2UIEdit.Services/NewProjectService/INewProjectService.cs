@@ -1,4 +1,5 @@
 ﻿using BZ2UIEdit.Common;
+using BZ2UIEdit.Common.Models;
 using MahApps.Metro.Controls.Dialogs;
 using System.IO;
 using System.Threading.Tasks;
